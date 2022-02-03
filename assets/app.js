@@ -7,6 +7,10 @@
 
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.css';
+import './bootstrap.min.css';
 
 // start the Stimulus application
-import './bootstrap';
+import './popper.js';
+import './jquery.js';
+import './jquery.mask.min.js';
+import './bootstrap-min.js';

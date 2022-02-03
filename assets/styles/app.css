@@ -1,3 +1,41 @@
+@font-face {
+    font-family: 'tangential';
+    src: url(./tangential-bold.ttf);
+}
+
+@font-face {
+    font-family: 'lato';
+    src: url(./Lato-Regular.ttf);
+ }
+
 body {
-    background-color: lightgray;
+    background-color: #F7F7F7;
+}
+
+.font-white{
+    color: #FFFFFF !important;
+}
+
+.font-black{
+    color: #2E383C !important;
+}
+
+.tangential {
+    font-family: 'tangential' !important;
+}
+
+.lato{
+    font-family: 'lato', sans-serif !important;
+}
+
+.rodape{
+    background-color: #222222;
+}
+
+.navbar-brand:hover{
+    transform: scale(1.008);
+}
+
+.minheight{
+    min-height: 100vh;
 }
