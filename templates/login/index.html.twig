@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Saken Tasks Login{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 col-sm-12 pt-5">
+            {% if error %}
+                <div class="alert alert-danger lato font-black">{% if error.code == 0 %} {{error.message}} {% else %} Ocorreu um erro interno. Por favor, tente mais tarde! {% endif %}</div>
+            {% endif %}
+            <div class="card py-3" id="login">
+                <div class="card-body">
+                    <div class="card-title font-purple h1 lato text-center">Login</div>
+                    <form action="{{ path('login') }}" method="post">
+                        <div class="form-group">
+                            <label class="lato font-black" for="username">Username:</label>
+                            <input type="text" name="_username" class="form-control lato font-black" id="username" value="{{ last_username }}" placeholder="Digite o seu nome de usuário" required>
+                        </div>
+                        <div class="form-group my-3">
+                            <label class="lato font-black" for="password">Senha:</label>
+                            <input type="password" name="_password" class="form-control lato font-black" id="password" placeholder="Digite a sua senha" required>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" id="btnLogin">Entrar</button>
+                        </div> 
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block footer %}
+    <div class="rodape text-center py-1 lato font-white">rodape</div>
+{% endblock %}

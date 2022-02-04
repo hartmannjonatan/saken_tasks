@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: FuncionarioRepository::class)]
-#[UniqueEntity('cpf', 'login')]
+#[UniqueEntity('cpf')]
 class Funcionario
 {
     #[ORM\Id]
@@ -29,12 +29,6 @@ class Funcionario
     #[ORM\ManyToOne(targetEntity: cargo::class, inversedBy: 'funcionarios')]
     #[ORM\JoinColumn(nullable: false)]
     private $cod_cargo;
-
-    #[ORM\Column(type: 'string', length: 20, unique: true)]
-    private $login;
-
-    #[ORM\Column(type: 'string', length: 50)]
-    private $senha;
 
     #[ORM\OneToMany(mappedBy: 'cod_func', targetEntity: Task::class)]
     private $tasks;
@@ -97,30 +91,6 @@ class Funcionario
     public function setCodCargo(?cargo $cod_cargo): self
     {
         $this->cod_cargo = $cod_cargo;
-
-        return $this;
-    }
-
-    public function getLogin(): ?string
-    {
-        return $this->login;
-    }
-
-    public function setLogin(string $login): self
-    {
-        $this->login = $login;
-
-        return $this;
-    }
-
-    public function getSenha(): ?string
-    {
-        return $this->senha;
-    }
-
-    public function setSenha(string $senha): self
-    {
-        $this->senha = $senha;
 
         return $this;
     }

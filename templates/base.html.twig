@@ -14,9 +14,9 @@
 			{{ encore_entry_script_tags('app') }}
 		{% endblock %}
 	</head>
-	<body class='d-flex flex-column minheight'>
-		<div class=''><nav class="navbar navbar-expand-lg navbar-dark bg-dark lato px-5">
-			<a class="navbar-brand" href="{{ path('index') }}"><img src="{{ asset('img/logo.png') }}" alt="Logo Saken Tasks" width="50"><span class="h1 tangential font-white px-2">Saken Tasks</span></a>
+	<body class='d-flex flex-column minheight' id="div-login">
+		<div class=''><nav class="navbar navbar-expand-lg navbar-dark bg-dark lato px-5 position-relative">
+			<a class="navbar-brand" href="{{ path('home') }}"><img src="{{ asset('img/logo.png') }}" alt="Logo Saken Tasks" width="50"><span class="h1 tangential font-white px-2">Saken Tasks</span></a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
 				<span class="navbar-toggler-icon"></span>
 			</button>
@@ -38,6 +38,10 @@
 					</div>
 				</li>
 			</div>
+			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+				<div class="position-absolute" style="right: 10px"><a id="logout-link" href="{{ path('app_logout') }}"><svg id="logout" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="50px" height="50px" viewBox="0 0 50 50" version="1.1"><g id="surface1"><path style=" stroke:none;fill-rule:nonzero;fill:rgba(255,255,255,.6);fill-opacity:1;" d="M 19.472656 6.933594 C 18.046875 7.148438 16.828125 7.78125 15.722656 8.886719 C 15.046875 9.550781 14.804688 9.882812 14.472656 10.546875 C 13.742188 12.039062 13.75 12.011719 13.703125 17.792969 L 13.652344 22.949219 L 6.992188 22.949219 L 9.003906 20.917969 C 10.109375 19.804688 11.085938 18.757812 11.164062 18.59375 C 12.03125 16.882812 10.265625 15.007812 8.546875 15.8125 C 8.28125 15.9375 6.828125 17.324219 4.179688 19.980469 C 0.0390625 24.148438 0 24.1875 0 25 C 0 25.800781 0.0390625 25.851562 4.179688 30.007812 C 6.777344 32.609375 8.289062 34.054688 8.554688 34.179688 C 9.335938 34.5625 10.304688 34.34375 10.90625 33.664062 C 11.445312 33.046875 11.554688 32.167969 11.171875 31.40625 C 11.085938 31.242188 10.109375 30.195312 9.003906 29.082031 L 6.992188 27.050781 L 13.652344 27.050781 L 13.703125 32.195312 C 13.75 37.988281 13.742188 37.960938 14.472656 39.453125 C 14.804688 40.117188 15.046875 40.449219 15.722656 41.113281 C 16.640625 42.03125 17.402344 42.5 18.652344 42.890625 L 19.382812 43.117188 L 31.835938 43.117188 C 43.601562 43.117188 44.328125 43.105469 44.921875 42.9375 C 47.257812 42.273438 49.003906 40.578125 49.726562 38.28125 L 49.953125 37.546875 L 49.953125 12.453125 L 49.726562 11.71875 C 49.015625 9.445312 47.304688 7.765625 44.96875 7.070312 C 44.421875 6.90625 43.625 6.894531 32.179688 6.875 C 25.46875 6.867188 19.746094 6.894531 19.472656 6.933594 Z M 34.1875 23.046875 C 34.785156 23.210938 35.1875 23.554688 35.476562 24.121094 C 35.710938 24.5625 35.75 24.734375 35.703125 25.125 C 35.625 25.8125 35.292969 26.359375 34.726562 26.710938 L 34.25 27 L 23.953125 27.03125 L 13.671875 27.050781 L 13.671875 22.949219 L 23.757812 22.949219 C 30.203125 22.949219 33.964844 22.988281 34.1875 23.046875 Z M 34.1875 23.046875 "/></g></svg></a></div>
+
+			{% endif %}
 		</nav></div>
 		<div class="container-fluid flex-grow-1">
 			{% block body %}{% endblock %}

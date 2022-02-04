@@ -10,6 +10,7 @@ import './styles/app.css';
 import './bootstrap.min.css';
 
 // start the Stimulus application
+import './script.js';
 import './popper.js';
 import './jquery.js';
 import './jquery.mask.min.js';
