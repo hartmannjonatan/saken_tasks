@@ -36,6 +36,10 @@ class Funcionario
     #[ORM\OneToMany(mappedBy: 'coordenador', targetEntity: Projeto::class)]
     private $projetos;
 
+    #[ORM\OneToOne(inversedBy: 'funcionario', targetEntity: user::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private $cod_user;
+
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
@@ -151,6 +155,18 @@ class Funcionario
                 $projeto->setCoordenador(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCodUser(): ?user
+    {
+        return $this->cod_user;
+    }
+
+    public function setCodUser(user $cod_user): self
+    {
+        $this->cod_user = $cod_user;
 
         return $this;
     }

@@ -24,6 +24,10 @@ body {
     color: #9933FF !important;
 }
 
+.font-gray{
+    color: rgba(255,255,255,.6);
+}
+
 .tangential {
     font-family: 'tangential' !important;
 }
@@ -44,12 +48,12 @@ body {
     min-height: 100vh;
 }
 
-#login{
-    backdrop-filter: blur(5px) saturate(85%);
-    -webkit-backdrop-filter: blur(5px) saturate(85%);
-    background-color: rgba(255, 255, 255, 0.36);
-    border-radius: 12px;
-    border: 1px solid rgba(209, 213, 219, 0.3);
+.glass{
+    backdrop-filter: blur(5px) saturate(85%) !important;
+    -webkit-backdrop-filter: blur(5px) saturate(85%) !important;
+    background-color: rgba(255, 255, 255, 0.36) !important;
+    border-radius: 12px !important;
+    border: 1px solid rgba(209, 213, 219, 0.3) !important;
 }
 
 #logout:hover path{
@@ -61,7 +65,7 @@ body {
     transition: all 1s;
 }
 
-#div-login{
+.bg{
     background-color: #9933ff;
     background-image: 
         radial-gradient(at 47% 33%, hsl(270.00, 0%, 97%) 0, transparent 59%), 
@@ -118,3 +122,39 @@ body {
     background: #9933FF;
     transition: background 0s;
    }
+
+@media(min-width: 992px) {
+    #navbar{
+        height: 3em;
+    }
+
+    #navbar span{
+        font-size: 20pt;
+    }
+
+    #logout-div{
+        position: absolute;
+        right: 10px;
+        top: 2px;
+    }
+}
+
+@media(max-width: 992px){
+    .menu-lateral{
+        display: none;
+    }
+}
+
+.menu-lateral{
+    background-color: #9933FF;
+}
+
+.link-menu{
+    padding-bottom: 5px;
+    border-bottom: 1px solid #9933FF;
+}
+
+.link-menu a:hover{
+    color: #222222 !important;
+    background-color: #66666671;
+}

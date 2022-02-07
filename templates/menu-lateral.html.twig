@@ -1,0 +1,168 @@
+<style>
+    .none{
+        display: none;
+    }
+@media(min-width: 992px){
+    @charset "UTF-8";
+    /* =CSS Reset */
+    /* https://meyerweb.com/eric/tools/css/reset/ 
+    v2.0 | 20110126
+    License: none (public domain)
+    */
+    .none{
+        display: block;
+    }
+    /* regra para o box-sizing */
+    *, *:before, *:after {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+                box-sizing: border-box;
+    }
+    /* regra para o clear float */
+    .cf:before,
+    .cf:after {content: " ";display: table;}
+    .cf:after {clear: both;}
+    .cf {*zoom: 1;}
+    body {
+        margin-left:50px; /* espaço à esquerda para a barra vertical vísivel do menu */
+        font:  62.5%/1.2 'lato', sans-serif;
+    }
+
+    #lateral {
+	padding:0 50px 0 25px;
+	-moz-transition: all 0.5s ease;
+		-webkit-transition: all 0.5s ease;
+			-o-transition: all 0.5s ease;
+				transition: all 0.5s ease;
+	font-size:1.2em;
+	background: rgb(34,34,34);
+    background: -moz-linear-gradient(180deg, rgba(34,34,34,1) 0%, rgba(55,38,73,1) 35%, rgba(110,37,184,1) 100%);
+    background: -webkit-linear-gradient(180deg, rgba(34,34,34,1) 0%, rgba(55,38,73,1) 35%, rgba(110,37,184,1) 100%);
+    background: linear-gradient(180deg, rgba(34,34,34,1) 0%, rgba(55,38,73,1) 35%, rgba(110,37,184,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#222222",endColorstr="#6e25b8",GradientType=1);
+	height:100%;
+	overflow:hidden;
+	width:300px; 
+	position:fixed;
+	top:0;
+	left:-250px;
+	}
+    #lateral:before {
+        z-index:1000;
+        font-size:4em;
+        color:white;
+        position:fixed;
+        left:4px;
+        top:45px;
+        }
+    #lateral:hover:before, #lateral:focus:before {
+    left:-500px;
+        }
+    #lateral:hover, #lateral:focus,  #lateral:active  {
+        overflow-y:auto;
+        -moz-transform: translate(250px, 0);
+            -webkit-transform: translate(250px, 0);
+                -o-transform: translate(250px, 0);
+                    transform: translate(250px, 0);
+        padding-right:0;
+        }
+    #lateral .box {
+	list-style-type:none;
+	margin-bottom:1em;;
+	padding-bottom:1em;
+	}
+    #lateral h3 {
+        display:inline-block;
+        font-weight:bold;
+        font-size:1.6em;
+        font-style:normal;
+        padding-bottom:0.2em;
+        margin: 2em 0 0.25em 0.81em;
+        color:rgb(255,255,255);
+        border-bottom: 4px solid rgb(155,155,155);
+        }
+
+    #iconMenu{
+        position: absolute;
+        top: 5px;
+        right: 8px;
+        -webkit-transition: -webkit-transform .8s ease-in-out;
+        -ms-transition: -ms-transform .8s ease-in-out;
+        transition: transform .8s ease-in-out; 
+    }
+
+    #lateral:hover span img, #lateral:focus span img,  #lateral:active span img  {
+        -moz-transform: rotate(180deg);
+            -webkit-transform: rotate(180deg);
+                -o-transform: rotate(180deg);
+                    transform: rotate(180deg);
+    }
+
+    #menu {
+        font-style:italic;
+        position:relative;
+        font-size:1.0em;
+        margin:1em 0 1em -1em;
+        padding:0;
+        }
+    #menu li {padding:0; margin:0;}
+    #menu li a,  #menu li a:link {
+        font-size:1.2em;
+        color:rgb(255,255,255);
+        text-decoration: none;
+        padding: 0.4em 0 0.4em 1em;
+        display: block;
+        -moz-transition: all 1.2s ease;
+                -webkit-transition: all 1.2s ease;
+                    -o-transition: all 1.2s ease;
+                        transition: all 1.2s ease;
+        }
+    #menu li a:hover {
+        color:rgb(255,255,255);
+        background-color:rgba(255,255,255,0.2);
+        -moz-transition: all 0.5s ease;
+                -webkit-transition: all 0.5s ease;
+                    -o-transition: all 0.5s ease;
+                        transition: all 0.5s ease;
+        }
+        
+}
+</style>
+<div class="none">
+    <div id="lateral">
+        <span id="iconMenu"><img src="{{ asset("img/icone-menu-right.png") }}" alt="Ícone menu" width="30"></span>
+    <div id="menu">
+                
+    <h3 class="link-titulo">Projetos</h3>
+    <ul class="box">					
+        <li><a href="#">Ver todos</a></li>
+    </ul>
+
+    <h3 class="link-titulo">Profile</h3>
+    <ul class="box">
+        <li><a href="#">Meu perfil</a></li>
+        <!-- mais links -->
+    </ul>
+
+    <h3 class="link-titulo">Painéis</h3>
+    <ul class="box">
+        <li><a href="#">Index</a></li>
+        <!-- mais links -->
+    </ul>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <h3 class="link-titulo">Gerenciar</h3>
+        <ul class="box">					
+            <li><a href="#">Funcionários</a></li>
+            <li><a href="#">Cadastrar novo funcionário</a></li>  			
+            {% if is_granted('ROLE_SUPER_ADMIN') %}<li><a href="#">Cadastrar novo gerente</a></li>{% endif %}		
+            <!-- mais links -->
+        </ul>
+    {% endif %}
+        
+    <!-- mais seções -->
+
+    </div> <!-- /#menu -->
+    </div id="link"> <!-- vazio --> <div>
+    </div> <!-- /#lateral -->
+</div>
