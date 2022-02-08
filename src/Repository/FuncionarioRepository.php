@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Funcionario;
+use App\Repository\UserRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -22,19 +23,22 @@ class FuncionarioRepository extends ServiceEntityRepository
     // /**
     //  * @return Funcionario[] Returns an array of Funcionario objects
     //  */
-    /*
-    public function findByExampleField($value)
+    public function findAllAndJoin()
     {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('f.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT funcionario.nome, funcionario.cpf, funcionario.data_nasc, cargo.nome cargo, user.username
+            FROM funcionario
+            INNER JOIN cargo ON funcionario.cod_cargo_id = cargo.id
+            INNER JOIN user ON funcionario.cod_user_id = user.id;
+        ';
+
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        return $resultSet->fetchAllAssociative();
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Funcionario

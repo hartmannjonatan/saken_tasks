@@ -95,4 +95,14 @@ class FuncionarioController extends AbstractController
             'form' => $form
         ]);
     }
+
+    #[Route('/admin/funcionarios', name: 'func')]
+    public function func(FuncionarioRepository $funcionarioRepository): Response
+    {
+        $funcionarios = $funcionarioRepository->findAllAndJoin();
+
+        return $this->render('admin/func.html.twig', [
+            'funcionarios' => $funcionarios,
+        ]);
+    }
 }

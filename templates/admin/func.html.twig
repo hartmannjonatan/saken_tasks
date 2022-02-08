@@ -3,7 +3,19 @@
 {% block title %}Saken Tasks Funcionários{% endblock %}
 
 {% block body %}
-    <div class="col-md-11">funcionarios</div>
+    <div class="col-md-11">funcionarios<br>
+    {% for funcionario in funcionarios %}
+        <div class="card">
+            <div class="card-body">
+                {{funcionario.nome}}<br>
+                {{funcionario.cpf}}<br>
+                {{funcionario.data_nasc}}<br>
+                {{funcionario.username}}<br>
+                {{funcionario.cargo}}
+            </div>
+        </div>
+    {% endfor %}
+    </div>
 
 
 {% endblock %}

@@ -26,7 +26,7 @@ class Funcionario
     #[ORM\Column(type: 'date')]
     private $data_nasc;
 
-    #[ORM\ManyToOne(targetEntity: cargo::class, inversedBy: 'funcionarios')]
+    #[ORM\ManyToOne(targetEntity: Cargo::class, inversedBy: 'funcionarios')]
     #[ORM\JoinColumn(nullable: false)]
     private $cod_cargo;
 
@@ -87,12 +87,12 @@ class Funcionario
         return $this;
     }
 
-    public function getCodCargo(): ?cargo
+    public function getCodCargo(): ?Cargo
     {
         return $this->cod_cargo;
     }
 
-    public function setCodCargo(?cargo $cod_cargo): self
+    public function setCodCargo(?Cargo $cod_cargo): self
     {
         $this->cod_cargo = $cod_cargo;
 

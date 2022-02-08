@@ -8,12 +8,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController
 {
-    #[Route('/admin/funcionarios', name: 'func')]
-    public function func(): Response
-    {
-        return $this->render('admin/func.html.twig');
-    }
-
     #[Route('/admin/cargos', name: 'cargos')]
     public function cargos(): Response
     {
