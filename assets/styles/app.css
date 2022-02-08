@@ -159,7 +159,7 @@ body {
     background-color: #66666671;
 }
 
-label{
+label:not(.no-label){
     font-family: 'lato';
     font-size: 2em;
 }
@@ -251,3 +251,7 @@ label{
    #btncriar:active .iconbtncriar svg {
     transform: scale(0.8);
    }
+
+.card:not(.glass){
+    z-index: -1 !important;
+}

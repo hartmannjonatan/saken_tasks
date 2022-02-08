@@ -33,11 +33,11 @@
                             <div class="card-title font-purple h1 lato text-center">Login</div>
                             <form action="{{ path('login') }}" method="post">
                                 <div class="form-group">
-                                    <label class="lato font-black" for="username">Username:</label>
+                                    <label class="lato font-black no-label" for="username">Username:</label>
                                     <input type="text" name="_username" class="form-control lato font-black" id="username" value="{{ last_username }}" placeholder="Digite o seu nome de usuário" required>
                                 </div>
                                 <div class="form-group my-3">
-                                    <label class="lato font-black" for="password">Senha:</label>
+                                    <label class="lato font-black no-label" for="password">Senha:</label>
                                     <input type="password" name="_password" aria-describedby="passwordHelp" class="form-control lato font-black" id="password" placeholder="Digite a sua senha" required>
                                     <small id="passwordHelp" class="form-text text-muted">Esqueceu sua senha? Por favor contate seu gerente.</small>
                                 </div>
