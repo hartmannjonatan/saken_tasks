@@ -158,3 +158,96 @@ body {
     color: #222222 !important;
     background-color: #66666671;
 }
+
+label{
+    font-family: 'lato';
+    font-size: 2em;
+}
+
+#deleteBtn{
+    -moz-transition: all 0.5s ease;
+        -webkit-transition: all 0.5s ease;
+            -o-transition: all 0.5s ease;
+                transition: all 0.5s ease;
+}
+#deleteBtn:hover{
+    content: url('/public/img/trash-open.png');
+}
+#editBtn{
+    -webkit-transition: -webkit-transform .4s ease-in-out;
+    -ms-transition: -ms-transform .4s ease-in-out;
+    transition: transform .4s ease-in-out; 
+}
+#editBtn:hover{
+    -moz-transform: rotate(-43deg);
+        -webkit-transform: rotate(-43deg);
+            -o-transform: rotate(-43deg);
+                transform: rotate(-43deg);
+}
+
+/* From cssbuttons.io */
+#btncriar {
+    width: 150px;
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    background: purple;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+    background: #6E25B8;
+    position: relative;
+   }
+   
+   #btncriar, #btncriar span {
+    transition: 200ms;
+   }
+   
+   #btncriar .textbtncriar {
+    transform: translateX(35px);
+    color: #F7F7F7;
+    font-weight: bold;
+    font-size: 12pt;
+    text-align: left;
+    position: absolute;
+    left: -10px;
+   }
+   
+   #btncriar .iconbtncriar {
+    position: absolute;
+    border-left: 1px solid #50366B;
+    transform: translateX(110px);
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   }
+   
+   #btncriar svg {
+    width: 15px;
+    fill: #eee;
+   }
+   
+   #btncriar:hover {
+    background: #9933ff;
+   }
+   
+   #btncriar:hover .textbtncriar {
+    color: transparent;
+   }
+   
+   #btncriar:hover .iconbtncriar {
+    width: 150px;
+    border-left: none;
+    transform: translateX(0);
+   }
+   
+   #btncriar:focus {
+    outline: none;
+   }
+   
+   #btncriar:active .iconbtncriar svg {
+    transform: scale(0.8);
+   }

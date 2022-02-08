@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Saken Tasks Cargos{% endblock %}
+
+{% block body %}
+    <div class="col-lg-2 d-md-none d-lg-block"></div>
+    <div class="col-lg-8 col-md-12 py-4 p-2">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-danger alert-dismissible fade show position-relative" role="alert">
+                <div class="lato font-black h6">{{ message }}</div>
+                <button type="button" class="close position-absolute" style="top: 8px; right: 5px;" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger alert-dismissible fade show position-relative" role="alert">
+                <div class="lato font-black h6">{{ message }}</div>
+                <button type="button" class="close position-absolute" style="top: 8px; right: 5px;" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+        <div class="d-flex justify-content-between mb-3 py-2">   
+            <div><h2 class="text-center font-purple lato">Cargos</h2></div>
+            <div><a id="btncriar" class="noselect" href="{{path('newCargo')}}"><span class="textbtncriar">Criar Novo</span><span class="iconbtncriar"><?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g id="surface1"><path style=" stroke:none;fill-rule:nonzero;fill:rgb(96.862745%,96.862745%,96.862745%);fill-opacity:1;" d="M 11.582031 0.0507812 C 10.757812 0.210938 10.054688 0.957031 9.9375 1.789062 C 9.914062 1.953125 9.890625 3.84375 9.890625 5.984375 L 9.890625 9.890625 L 5.992188 9.890625 C 3.523438 9.890625 1.972656 9.910156 1.78125 9.941406 C 0.882812 10.082031 0.1875 10.78125 0.0390625 11.691406 C -0.144531 12.796875 0.671875 13.902344 1.789062 14.0625 C 1.953125 14.085938 3.84375 14.109375 5.992188 14.109375 L 9.890625 14.109375 L 9.890625 18.007812 C 9.890625 20.15625 9.914062 22.046875 9.9375 22.210938 C 10.097656 23.328125 11.203125 24.144531 12.308594 23.960938 C 13.21875 23.8125 13.917969 23.117188 14.058594 22.21875 C 14.089844 22.027344 14.109375 20.476562 14.109375 18.007812 L 14.109375 14.109375 L 18.015625 14.109375 C 20.15625 14.109375 22.046875 14.085938 22.210938 14.0625 C 23.328125 13.902344 24.144531 12.796875 23.960938 11.691406 C 23.8125 10.78125 23.117188 10.082031 22.21875 9.941406 C 22.027344 9.910156 20.476562 9.890625 18.015625 9.890625 L 14.109375 9.890625 L 14.109375 5.984375 C 14.109375 3.84375 14.085938 1.953125 14.0625 1.789062 C 13.898438 0.625 12.75 -0.179688 11.582031 0.0507812 Z M 11.582031 0.0507812 "/></g></svg></span></a></div>
+        </div>
+        {% for cargo in cargos %}
+            <div class="item alert alert-danger d-flex justify-content-between">
+                <div class="h5 lato font-black">{{ cargo.nome }}</div>
+                <div>
+                    <a class="mx-2 itemDelete" href="{{path('deleteCargo', {id: cargo.id})}}"><img id="deleteBtn" src="{{asset('img/trash.png')}}" alt="Deletar" width="30"></a>
+                    <a href="{{path('updateCargo', {id: cargo.id})}}"><img id="editBtn" src="{{asset('img/edit.png')}}" width="30" alt="Editar"></a>
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+
+
+{% endblock %}
+
+{% block footer %} 
+    <div class="rodape text-center py-1 lato font-gray">© Saken Tasks 2022</div>
+{% endblock %}

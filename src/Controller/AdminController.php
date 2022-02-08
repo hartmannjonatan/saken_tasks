@@ -14,7 +14,13 @@ class AdminController extends AbstractController
         return $this->render('admin/func.html.twig');
     }
 
-    #[Route('/admin/gerentes', name: 'ger')]
+    #[Route('/admin/cargos', name: 'cargos')]
+    public function cargos(): Response
+    {
+        return $this->render('admin/cargos.html.twig');
+    }
+    
+    #[Route('/admin/new/gerente', name: 'ger')]
     public function ger(): Response
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');

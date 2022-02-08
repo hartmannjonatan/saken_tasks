@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cadastrar funcionário{% endblock %}
+
+{% block body %}
+    <div class="col-lg-2 d-md-none d-lg-block"></div>
+    <div class="col-lg-8 col-md-12 py-5">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="lato font-purple mb-2">Novo Funcionário</h2>
+                <h4 class="lato font-black mb-4">Continue preenchendo os demais dados do funcionário.</h4>
+                
+                {{ form_start(form) }}
+                    {{ form_row(form.nome, {
+                        label: 'Nome:',
+                        attr: {
+                            placeholder: 'Digite aqui o nome do funcionário.'
+                        }
+                    })}}
+                    {{ form_row(form.cpf, {
+                        label: 'CPF:',
+                        attr: {
+                            placeholder: '_ _ _ . _ _ _ . _ _ _ - _ _'
+                        }
+                    })}}
+                    {{ form_row(form.data_nasc, {
+                        label: 'Data de nascimento:'
+                    })}}
+                    {{ form_row(form.cod_cargo, {
+                        label: 'Escolha o principal cargo para este funcionário:'
+                    })}}
+                    {{ form_row(form.save) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+
+    </div>
+
+
+{% endblock %}
+
+{% block footer %} 
+    <div class="rodape text-center py-1 lato font-gray">© Saken Tasks 2022</div>
+{% endblock %}

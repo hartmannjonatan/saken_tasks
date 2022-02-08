@@ -43,7 +43,7 @@
 							<li class="nav-item d-lg-none my-3 lato">
 								<h5 class="font-white">Gerenciar</h5>
 								<a class="nav-link px-5" href="{{ path('func') }}">Funcionários</a>
-								<a class="nav-link px-5" href="#">Cadastrar novo funcionário</a>
+								<a class="nav-link px-5" href="{{ path('cargos') }}">Cargos</a>
 								{% if is_granted('ROLE_SUPER_ADMIN') %}
 									<a class="nav-link px-5" href="{{ path('ger') }}">Cadastrar novo gerente</a>
 								{% endif %} 
@@ -56,7 +56,7 @@
 			</div>
 		</nav></div>
 		<div class="container-fluid flex-grow-1 d-flex align-items-stretch">
-			<div class="row flex-fill">
+			<div class="row flex-fill p-2">
 				{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 					{% include "menu-lateral.html.twig" %}
 				{% endif %}

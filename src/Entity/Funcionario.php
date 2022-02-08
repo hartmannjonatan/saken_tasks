@@ -20,7 +20,7 @@ class Funcionario
     #[ORM\Column(type: 'string', length: 50)]
     private $nome;
 
-    #[ORM\Column(type: 'integer', unique: true)]
+    #[ORM\Column(type: 'string', unique: true)]
     private $cpf;
 
     #[ORM\Column(type: 'date')]
@@ -63,12 +63,12 @@ class Funcionario
         return $this;
     }
 
-    public function getCpf(): ?int
+    public function getCpf(): ?string
     {
         return $this->cpf;
     }
 
-    public function setCpf(int $cpf): self
+    public function setCpf(string $cpf): self
     {
         $this->cpf = $cpf;
 

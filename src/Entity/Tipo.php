@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\TypeRepository;
+use App\Repository\TipoRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: TypeRepository::class)]
-class Type
+#[ORM\Entity(repositoryClass: TipoRepository::class)]
+class Tipo
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -21,7 +21,7 @@ class Type
     #[ORM\Column(type: 'integer')]
     private $grau_urgencia;
 
-    #[ORM\OneToMany(mappedBy: 'cod_type', targetEntity: Task::class)]
+    #[ORM\OneToMany(mappedBy: 'tipo', targetEntity: Task::class)]
     private $tasks;
 
     public function __construct()
@@ -70,7 +70,7 @@ class Type
     {
         if (!$this->tasks->contains($task)) {
             $this->tasks[] = $task;
-            $task->setCodType($this);
+            $task->setTipo($this);
         }
 
         return $this;
@@ -80,11 +80,12 @@ class Type
     {
         if ($this->tasks->removeElement($task)) {
             // set the owning side to null (unless already changed)
-            if ($task->getCodType() === $this) {
-                $task->setCodType(null);
+            if ($task->getTipo() === $this) {
+                $task->setTipo(null);
             }
         }
 
         return $this;
     }
+
 }

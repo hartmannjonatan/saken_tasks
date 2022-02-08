@@ -11,6 +11,9 @@
     */
     .none{
         display: block;
+        width: 0;
+        height: 0;
+        padding: 0;
     }
     /* regra para o box-sizing */
     *, *:before, *:after {
@@ -42,10 +45,10 @@
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#222222",endColorstr="#6e25b8",GradientType=1);
 	height:100%;
 	overflow:hidden;
-	width:300px; 
+	width:250px; 
 	position:fixed;
 	top:0;
-	left:-250px;
+	left:-200px;
 	}
     #lateral:before {
         z-index:1000;
@@ -60,10 +63,10 @@
         }
     #lateral:hover, #lateral:focus,  #lateral:active  {
         overflow-y:auto;
-        -moz-transform: translate(250px, 0);
-            -webkit-transform: translate(250px, 0);
-                -o-transform: translate(250px, 0);
-                    transform: translate(250px, 0);
+        -moz-transform: translate(200px, 0);
+            -webkit-transform: translate(200px, 0);
+                -o-transform: translate(200px, 0);
+                    transform: translate(200px, 0);
         padding-right:0;
         }
     #lateral .box {
@@ -153,9 +156,9 @@
     {% if is_granted('ROLE_ADMIN') %}
         <h3 class="link-titulo">Gerenciar</h3>
         <ul class="box">					
-            <li><a href="{{ path('func') }}">Funcionários</a></li>
-            <li><a href="#">Cadastrar novo funcionário</a></li>  			
-            {% if is_granted('ROLE_SUPER_ADMIN') %}<li><a href="{{ path('ger') }}">Cadastrar novo gerente</a></li>{% endif %}		
+            <li><a href="{{ path('func') }}">Funcionários</a></li>	
+            <li><a href="{{ path('cargos') }}">Cargos</a></li>	
+            {% if is_granted('ROLE_SUPER_ADMIN') %}<li><a href="{{ path('ger') }}">Gerentes</a></li>{% endif %}		
             <!-- mais links -->
         </ul>
     {% endif %}
@@ -163,6 +166,5 @@
     <!-- mais seções -->
 
     </div> <!-- /#menu -->
-    </div id="link"> <!-- vazio --> <div>
     </div> <!-- /#lateral -->
 </div>

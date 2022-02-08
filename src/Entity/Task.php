@@ -32,17 +32,17 @@ class Task
     #[ORM\JoinColumn(nullable: false)]
     private $cod_func;
 
-    #[ORM\ManyToOne(targetEntity: type::class, inversedBy: 'tasks')]
-    #[ORM\JoinColumn(nullable: false)]
-    private $cod_type;
-
-    #[ORM\ManyToOne(targetEntity: classificacao::class, inversedBy: 'tasks')]
+    #[ORM\ManyToOne(targetEntity: Classificacao::class, inversedBy: 'tasks')]
     #[ORM\JoinColumn(nullable: false)]
     private $cod_class;
 
     #[ORM\ManyToOne(targetEntity: Projeto::class, inversedBy: 'cod_tasks')]
     #[ORM\JoinColumn(nullable: false)]
     private $projeto;
+
+    #[ORM\ManyToOne(targetEntity: Tipo::class, inversedBy: 'tasks')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $tipo;
 
     public function getId(): ?int
     {
@@ -121,24 +121,12 @@ class Task
         return $this;
     }
 
-    public function getCodType(): ?type
-    {
-        return $this->cod_type;
-    }
-
-    public function setCodType(?type $cod_type): self
-    {
-        $this->cod_type = $cod_type;
-
-        return $this;
-    }
-
-    public function getCodClass(): ?classificacao
+    public function getCodClass(): ?Classificacao
     {
         return $this->cod_class;
     }
 
-    public function setCodClass(?classificacao $cod_class): self
+    public function setCodClass(?Classificacao $cod_class): self
     {
         $this->cod_class = $cod_class;
 
@@ -153,6 +141,18 @@ class Task
     public function setProjeto(?Projeto $projeto): self
     {
         $this->projeto = $projeto;
+
+        return $this;
+    }
+
+    public function getTipo(): ?Tipo
+    {
+        return $this->tipo;
+    }
+
+    public function setTipo(?Tipo $tipo): self
+    {
+        $this->tipo = $tipo;
 
         return $this;
     }
