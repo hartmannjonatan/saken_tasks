@@ -153,9 +153,9 @@
     {% if is_granted('ROLE_ADMIN') %}
         <h3 class="link-titulo">Gerenciar</h3>
         <ul class="box">					
-            <li><a href="#">Funcionários</a></li>
+            <li><a href="{{ path('func') }}">Funcionários</a></li>
             <li><a href="#">Cadastrar novo funcionário</a></li>  			
-            {% if is_granted('ROLE_SUPER_ADMIN') %}<li><a href="#">Cadastrar novo gerente</a></li>{% endif %}		
+            {% if is_granted('ROLE_SUPER_ADMIN') %}<li><a href="{{ path('ger') }}">Cadastrar novo gerente</a></li>{% endif %}		
             <!-- mais links -->
         </ul>
     {% endif %}

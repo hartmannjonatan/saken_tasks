@@ -8,9 +8,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController
 {
-    #[Route('/admin', name: 'admin')]
-    public function index(): Response
+    #[Route('/admin/funcionarios', name: 'func')]
+    public function func(): Response
     {
-        return $this->render('home/index.html.twig');
+        return $this->render('admin/func.html.twig');
+    }
+
+    #[Route('/admin/gerentes', name: 'ger')]
+    public function ger(): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+        return $this->render('admin/ger.html.twig');
     }
 }
