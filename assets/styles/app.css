@@ -28,6 +28,16 @@ body {
     color: rgba(255,255,255,.6);
 }
 
+.font-topic{
+    font-size: 1rem;
+    color: #2c2c2c;
+    font-family: 'lato', sans-serif;
+}
+
+.font-10{
+    font-size: 0.8rem;
+}
+
 .tangential {
     font-family: 'tangential' !important;
 }

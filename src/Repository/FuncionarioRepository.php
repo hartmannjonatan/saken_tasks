@@ -28,7 +28,7 @@ class FuncionarioRepository extends ServiceEntityRepository
         $conn = $this->getEntityManager()->getConnection();
 
         $sql = '
-            SELECT funcionario.nome, funcionario.cpf, funcionario.data_nasc, cargo.nome cargo, user.username
+            SELECT funcionario.id, funcionario.nome, funcionario.cpf, funcionario.data_nasc, cargo.nome cargo, user.username
             FROM funcionario
             INNER JOIN cargo ON funcionario.cod_cargo_id = cargo.id
             INNER JOIN user ON funcionario.cod_user_id = user.id;

@@ -17,14 +17,11 @@
 	<body class='d-flex flex-column minheight bg'>
 		<div class=''><nav class="navbar navbar-expand-lg navbar-dark bg-dark lato px-5 position-relative">
 			<a class="navbar-brand" href="{{ path('home') }}"><img src="{{ asset('img/logo.png') }}" alt="Logo Saken Tasks" width="50"><span class="h1 tangential font-white px-2">Saken Tasks</span></a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
-				<span class="navbar-toggler-icon"></span>
-			</button>
 		</nav></div>
 		<div class="container-fluid flex-grow-1">
 			<div class="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4 col-sm-12 pt-5">
+                <div class="col-lg-4 d-md-none d-lg-block"></div>
+                <div class="col-lg-4 col-md-12 pt-5">
                     {% if error %}
                         <div class="alert alert-danger lato font-black">{% if error.message is defined %} O login e/ou a senha estão inválidos! Tente novamente! {% endif %}</div>
                     {% endif %}
