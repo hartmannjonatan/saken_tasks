@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cadastrar funcionário{% endblock %}
+
+{% block body %}
+    <div class="col-lg-2 d-md-none d-lg-block"></div>
+    <div class="col-lg-8 col-md-12 py-5">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="lato font-purple mb-2">Autenticação</h2>
+                <h4 class="lato font-black mb-4">Antes de prosseguir, por favor confirme que é você mesmo.</h4>
+                {% for message in app.flashes('error') %}
+                    <div class="alert alert-danger alert-dismissible fade show position-relative" role="alert">
+                        <div class="lato font-black h6">{{ message }}</div>
+                        <button type="button" class="close position-absolute" style="top: 8px; right: 5px;" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+                
+                {{ form_start(form) }}
+                    {{ form_row(form.plainPassword, {
+                        label: 'Digite a sua senha de gerente',
+                        attr: {
+                            placeholder: 'Digite aqui a senha. A mesma utilizada para fazer o seu login!'
+                        }
+                    })}}
+                    {{ form_row(form.save) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+
+    </div>
+
+
+{% endblock %}
+
+{% block footer %} 
+    <div class="rodape text-center py-1 lato font-gray">© Saken Tasks 2022</div>
+{% endblock %}

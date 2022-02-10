@@ -5,6 +5,7 @@ window.onload = function(){
             el.addEventListener('click', confirmeDelete, false)
         );
     }
+        
     if(document.getElementById("formSearch") != null){document.getElementById("formSearch").addEventListener("reset", cancelSearch, false);} //Pesquisa de itens
 }
 

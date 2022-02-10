@@ -23,15 +23,17 @@ class FuncionarioRepository extends ServiceEntityRepository
     // /**
     //  * @return Funcionario[] Returns an array of Funcionario objects
     //  */
+    
     public function findAllAndJoin()
     {
         $conn = $this->getEntityManager()->getConnection();
 
         $sql = '
-            SELECT funcionario.id, funcionario.nome, funcionario.cpf, funcionario.data_nasc, cargo.nome cargo, user.username
+            SELECT funcionario.id, funcionario.nome, funcionario.cpf, funcionario.data_nasc, cargo.nome cargo, user.username, user.id user_id
             FROM funcionario
             INNER JOIN cargo ON funcionario.cod_cargo_id = cargo.id
-            INNER JOIN user ON funcionario.cod_user_id = user.id;
+            INNER JOIN user ON funcionario.cod_user_id = user.id
+            ORDER BY funcionario.id DESC;
         ';
 
         $stmt = $conn->prepare($sql);

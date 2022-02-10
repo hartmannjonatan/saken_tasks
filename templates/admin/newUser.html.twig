@@ -7,10 +7,37 @@
     <div class="col-lg-8 col-md-12 py-5">
         <div class="card">
             <div class="card-body">
-                <h2 class="lato font-purple mb-2">Novo Funcionário</h2>
-                <h4 class="lato font-black mb-4">Primeiro, crie um username e uma senha que serão utilizados no login!</h4>
+                {% if edit is defined %}
+                    <h2 class="lato font-purple mb-4">Editar Login</h2>
+                {% else %}
+                    <h2 class="lato font-purple mb-2">Novo Funcionário</h2>
+                    <h4 class="lato font-black mb-4">Primeiro, crie um username e uma senha que serão utilizados no login!</h4>
+                {% endif %}
                 
                 {{ form_start(form) }}
+                    {% if edit is defined %}
+                        <div class="modal fade" id="modalPassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title font-purple lato" id="exampleModalLabel">Autenticação</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h6 class="lato font-black mb-4">Somente para verificar se é você mesmo.  :)</h6>
+                                        {{ form_row(form.passwordAdmin, {
+                                            label: 'Digite aqui sua senha como gerente:'
+                                        })}}
+                                    </div>
+                                    <div class="modal-footer">
+                                        {{ form_row(form.save) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
                     {{ form_row(form.username, {
                         label: 'Username:',
                         attr: {
@@ -23,7 +50,11 @@
                             placeholder: 'Digite aqui a senha. O funcionário precisa lembrar dela ao fazer login.'
                         }
                     })}}
-                    {{ form_row(form.save) }}
+                    {% if edit is defined %}
+                        <button class="btn btn-success" data-toggle="modal" data-target="#modalPassword">Confirmar Alteração</button>
+                    {% else %}
+                        {{ form_row(form.save) }}
+                    {% endif %}
                 {{ form_end(form) }}
             </div>
         </div>

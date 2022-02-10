@@ -40,7 +40,7 @@
                     <div class="h5 inputSearch lato font-black">{{ funcionario.nome }}</div>
                     <div>
                         <a class="mx-2 itemDelete" href="#"><img id="deleteBtn" src="{{asset('img/trash.png')}}" alt="Deletar" width="30"></a>
-                        <a href="#"><img id="editBtn" src="{{asset('img/edit.png')}}" width="30" alt="Editar"></a>
+                        <button data-toggle="modal" data-target="#modalEdit{{funcionario.id}}" style="border: 0; background: none;"><img id="editBtn" src="{{asset('img/edit.png')}}" width="30" alt="Editar"></button>
                     </div>
                 </div>
                 <div class="h6 lato font-black">{{ funcionario.cargo }}</div>
@@ -50,6 +50,23 @@
                     <span class="font-topic">Data de nascimento: </span><span class="font-10">{{ funcionario.data_nasc }}</span><br>
                     <span class="font-topic">Username: </span><span class="font-10">{{ funcionario.username }}</span><br>
                 </details>
+            </div>
+
+            <div class="modal fade" id="modalEdit{{funcionario.id}}" tabindex="-1" role="dialog" aria-labelledby="labelEditModal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="labelEditModal">Editar {{ funcionario.nome }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <a href="{{path('updateFunc', {id: funcionario.id})}}"><button type="button" class="btn btn-secondary">Alterar dados</button></a>
+                            <a href="{{path('updateLogin', {id: funcionario.user_id})}}"><button type="button" class="btn btn-primary">Alterar login</button></a>
+                        </div>
+                    </div>
+                </div>
             </div>
         {% endfor %}
 

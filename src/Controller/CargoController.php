@@ -84,9 +84,9 @@ class CargoController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $postagem = $form->getData();
+            $cargo = $form->getData();
             try {
-                $entityManager->persist($postagem);
+                $entityManager->persist($cargo);
                 $entityManager->flush();
             } catch (\Exception $e) {
                 $this->addFlash(
