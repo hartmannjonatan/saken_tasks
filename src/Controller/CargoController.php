@@ -121,7 +121,7 @@ class CargoController extends AbstractController
         if(!$cargo){
             $this->addFlash(
                 'error',
-                'Essa cargo não existe. :('
+                'Esse cargo não existe. :('
             );
             
             return $this->redirectToRoute('cargos');

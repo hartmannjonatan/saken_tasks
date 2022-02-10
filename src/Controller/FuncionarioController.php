@@ -8,6 +8,7 @@ use App\Form\Type\FuncionarioType;
 use App\Form\Type\FuncionarioTypeEdit;
 use App\Form\Type\UserType;
 use App\Form\Type\UserTypeEdit;
+use App\Form\Type\DeleteConfirmType;
 use App\Form\Type\ConfirmType;
 use App\Repository\FuncionarioRepository;
 use App\Repository\UserRepository;
@@ -19,6 +20,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 
@@ -245,5 +247,59 @@ class FuncionarioController extends AbstractController
             'form' => $form,
             'edit' => true,
         ]);
+    }
+
+    #[Route('/admin/funcionario/delete/{id}', name: 'deleteFunc')]
+    public function delete(int $id, Request $request, ManagerRegistry $doctrine, FuncionarioRepository $funcionarioRepository, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher): Response {
+        $entityManager = $doctrine->getManager();
+        $funcionario = $funcionarioRepository
+            ->find($id);
+        $user = $userRepository->find($funcionario->getCodUser());
+
+        if(!$funcionario){
+            $this->addFlash(
+                'error',
+                'Esse funcionário não existe. :('
+            );
+            
+            return $this->redirectToRoute('func');
+        }
+
+        $form = $this->createForm(DeleteConfirmType::class);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            /** @var \App\Entity\User $userConfirmated */
+            $userConfirmated = $this->getUser();
+
+            if(!$userPasswordHasher->isPasswordValid($userConfirmated, $form->get('passwordAdmin')->getData())){
+                $this->addFlash(
+                    'error',
+                    'Sua senha está incorreta! Por motivos de segurança não deletamos o funcionário "'.$funcionario->getNome().'"!'
+                );
+                return $this->redirectToRoute('func');
+            } else{
+                $this->addFlash(
+                    'success',
+                    'O funcionário "'.$funcionario->getNome().'" foi deletado com sucesso! Juntamente com seus dados de login.'
+                );
+
+                $entityManager->remove($funcionario);
+                $entityManager->flush();
+
+                $entityManager->remove($user);
+                $entityManager->flush();
+                
+                
+                return $this->redirectToRoute('func');
+            }
+        }
+
+        return $this->renderForm('admin/confirmPassword.html.twig', [
+            'form' => $form,
+        ]);
+
+            
     }
 }

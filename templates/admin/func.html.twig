@@ -39,7 +39,7 @@
                 <div class="d-flex justify-content-between">
                     <div class="h5 inputSearch lato font-black">{{ funcionario.nome }}</div>
                     <div>
-                        <a class="mx-2 itemDelete" href="#"><img id="deleteBtn" src="{{asset('img/trash.png')}}" alt="Deletar" width="30"></a>
+                        <a class="mx-2 itemDelete" href="{{ path('deleteFunc', {id: funcionario.id }) }}"><img id="deleteBtn" src="{{asset('img/trash.png')}}" alt="Deletar" width="30"></a>
                         <button data-toggle="modal" data-target="#modalEdit{{funcionario.id}}" style="border: 0; background: none;"><img id="editBtn" src="{{asset('img/edit.png')}}" width="30" alt="Editar"></button>
                     </div>
                 </div>
