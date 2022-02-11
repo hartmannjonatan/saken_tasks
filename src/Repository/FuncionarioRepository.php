@@ -42,6 +42,22 @@ class FuncionarioRepository extends ServiceEntityRepository
         return $resultSet->fetchAllAssociative();
     }
 
+    public function findAllAndCargo(int $id)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT funcionario.nome, funcionario.id
+            FROM funcionario
+            WHERE funcionario.cod_cargo_id = :id;
+        ';
+
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['id' => $id]);
+
+        return $resultSet->fetchAllAssociative();
+    }
+
     /*
     public function findOneBySomeField($value): ?Funcionario
     {

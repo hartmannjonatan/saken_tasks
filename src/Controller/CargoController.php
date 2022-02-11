@@ -6,6 +6,7 @@ use App\Entity\Cargo;
 use App\Repository\CargoRepository;
 use App\Form\Type\CargoType;
 use App\Form\Type\CargoTypeEdit;
+use App\Repository\FuncionarioRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -55,9 +56,16 @@ class CargoController extends AbstractController
     }
 
     #[Route('/admin/cargos', name: 'cargos')]
-    public function read(CargoRepository $cargoRepository): Response
+    public function read(CargoRepository $cargoRepository, FuncionarioRepository $funcionarioRepository): Response
     {
-        $cargos = $cargoRepository->findAll();
+        $cargos = $cargoRepository->findAllAndFunc();
+        // $funcionarios = $funcionarioRepository->findBy(['cod_cargo' => 1]);
+
+        foreach ($cargos as $key => $cargo) {
+            $funcionarios = $funcionarioRepository->findAllAndCargo($cargo['id']);
+            $cargo += ["funcionarios" => $funcionarios];
+            $cargos[$key] = $cargo;
+        }
 
         return $this->render('admin/cargos.html.twig', [
             'cargos' => $cargos

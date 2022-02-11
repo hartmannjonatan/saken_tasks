@@ -22,19 +22,21 @@ class CargoRepository extends ServiceEntityRepository
     // /**
     //  * @return Cargo[] Returns an array of Cargo objects
     //  */
-    /*
-    public function findByExampleField($value)
+    public function findAllAndFunc()
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT *
+            FROM cargo
+            ORDER BY cargo.id DESC;
+        ';
+
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        return $resultSet->fetchAllAssociative();
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Cargo
