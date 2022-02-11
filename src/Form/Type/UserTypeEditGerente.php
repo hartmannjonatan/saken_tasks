@@ -11,12 +11,12 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class UserType extends AbstractType {
+class UserTypeEditGerente extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) : void
     {
         $builder
-            ->add('username', TextType::class)
+            ->add(child: 'username')
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
@@ -34,7 +34,27 @@ class UserType extends AbstractType {
                     ]),
                 ],
             ])
-            ->add('save', SubmitType::class, ['label' => 'Prosseguir cadastro ->'])
+            ->add('passwordAdmin', PasswordType::class, [
+                // instead of being set onto the object directly,
+                // this is read and encoded in the controller
+                'mapped' => false,
+                'attr' => ['autocomplete' => 'new-password'],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Por favor digite uma senha',
+                    ])
+                ],
+            ])
+            ->add('superadmin', ChoiceType::class, [
+                'mapped' => false,
+                'multiple' => false,
+                'expanded' => true,
+                'choices' => [
+                    'Sim' => true,
+                    'Não' => false
+                ],
+            ])
+            ->add('save', SubmitType::class, ['label' => 'Confirmar alteração'])
         ;
     }
 

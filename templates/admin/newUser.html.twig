@@ -54,6 +54,15 @@
                             placeholder: 'Digite aqui a senha. Ela precisa ser lembrada ao fazer login.'
                         }
                     })}}
+                    {% if gerente is defined %}
+                        <label class="my-2" for="superadmin">Você quer que este gerente tenha controle de outros gerentes (superadmin):</label>
+                        {{ form_row(form.superadmin, {
+                            label: false,
+                            attr: {
+                                id: 'superadmin'
+                            }
+                        }) }}
+                    {% endif %}
                     {% if edit is defined %}
                         <button class="btn btn-success" data-toggle="modal" data-target="#modalPassword">Confirmar Alteração</button>
                     {% else %}

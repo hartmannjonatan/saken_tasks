@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class UserType extends AbstractType {
+class UserTypeGerente extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) : void
     {
@@ -32,6 +32,15 @@ class UserType extends AbstractType {
                         // max length allowed by Symfony for security reasons
                         'max' => 255,
                     ]),
+                ],
+            ])
+            ->add('superadmin', ChoiceType::class, [
+                'mapped' => false,
+                'multiple' => false,
+                'expanded' => true,
+                'choices' => [
+                    'Sim' => true,
+                    'Não' => false
                 ],
             ])
             ->add('save', SubmitType::class, ['label' => 'Prosseguir cadastro ->'])

@@ -22,19 +22,22 @@ class GerenteRepository extends ServiceEntityRepository
     // /**
     //  * @return Gerente[] Returns an array of Gerente objects
     //  */
-    /*
-    public function findByExampleField($value)
+    public function findAllAndJoin()
     {
-        return $this->createQueryBuilder('g')
-            ->andWhere('g.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('g.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT gerente.id, gerente.nome, user.username, user.id user_id
+            FROM gerente
+            INNER JOIN user ON gerente.cod_user_id = user.id
+            ORDER BY gerente.id DESC;
+        ';
+
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        return $resultSet->fetchAllAssociative();
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Gerente

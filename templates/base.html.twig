@@ -45,7 +45,7 @@
 								<a class="nav-link px-5" href="{{ path('func') }}">Funcionários</a>
 								<a class="nav-link px-5" href="{{ path('cargos') }}">Cargos</a>
 								{% if is_granted('ROLE_SUPER_ADMIN') %}
-									<a class="nav-link px-5" href="{{ path('newUserGerente') }}">Gerentes</a>
+									<a class="nav-link px-5" href="{{ path('gerente') }}">Gerentes</a>
 								{% endif %} 
 							</li>
 							<hr class="font-white">
