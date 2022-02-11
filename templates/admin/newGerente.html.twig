@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} {% if edit is defined %}Editar Login {% else %} {% if gerente is defined %}Cadastrar Gerente {% else %}Cadastrar funcionário {% endif %}{% endif %}{% endblock %}
+{% block title %}{% if edit is defined %}Editar Gerente {% else %} Cadastrar Gerente {% endif %}{% endblock %}
 
 {% block body %}
     <div class="col-lg-2 d-md-none d-lg-block"></div>
@@ -8,14 +8,10 @@
         <div class="card">
             <div class="card-body">
                 {% if edit is defined %}
-                    <h2 class="lato font-purple mb-4">Editar Login</h2>
+                    <h2 class="lato font-purple mb-2">Editar Gerente</h2>
                 {% else %}
-                    {% if gerente is defined %}
-                        <h2 class="lato font-purple mb-2">Novo Gerente</h2>
-                    {% else %}
-                        <h2 class="lato font-purple mb-2">Novo Funcionário</h2>
-                    {% endif %}
-                    <h4 class="lato font-black mb-4">Primeiro, crie um username e uma senha que serão utilizados no login!</h4>
+                    <h2 class="lato font-purple mb-2">Novo Gerente</h2>
+                    <h4 class="lato font-black mb-4">Continue o cadastro informando o nome do gerente.</h4>
                 {% endif %}
                 
                 {{ form_start(form) }}
@@ -31,7 +27,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <h6 class="lato font-black mb-4">Somente para verificar se é você mesmo.  :)</h6>
-                                        {{ form_row(form.passwordAdmin, {
+                                        {{ form_row(form.plainPassword, {
                                             label: 'Digite aqui sua senha como gerente:'
                                         })}}
                                     </div>
@@ -42,16 +38,10 @@
                             </div>
                         </div>
                     {% endif %}
-                    {{ form_row(form.username, {
-                        label: 'Username:',
+                    {{ form_row(form.nome, {
+                        label: 'Nome:',
                         attr: {
-                            placeholder: 'Digite aqui o username. Lembrando que ele deve ser único.'
-                        }
-                    })}}
-                    {{ form_row(form.plainPassword, {
-                        label: 'Senha:',
-                        attr: {
-                            placeholder: 'Digite aqui a senha. Ela precisa ser lembrada ao fazer login.'
+                            placeholder: 'Digite aqui o nome do gerente'
                         }
                     })}}
                     {% if edit is defined %}

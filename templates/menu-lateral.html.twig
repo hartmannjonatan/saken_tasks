@@ -158,7 +158,7 @@
         <ul class="box">					
             <li><a href="{{ path('func') }}">Funcionários</a></li>	
             <li><a href="{{ path('cargos') }}">Cargos</a></li>	
-            {% if is_granted('ROLE_SUPER_ADMIN') %}<li><a href="{{ path('ger') }}">Gerentes</a></li>{% endif %}		
+            {% if is_granted('ROLE_SUPER_ADMIN') %}<li><a href="{{ path('newUserGerente') }}">Gerentes</a></li>{% endif %}		
             <!-- mais links -->
         </ul>
     {% endif %}
