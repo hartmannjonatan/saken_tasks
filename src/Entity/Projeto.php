@@ -3,10 +3,16 @@
 namespace App\Entity;
 
 use App\Repository\ProjetoRepository;
+use DateTime;
+use DateTimeImmutable;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @UniqueEntity(fields={"nome"}, message="Já há um projeto com esse nome. Por favor escolha outro...")
+ */
 #[ORM\Entity(repositoryClass: ProjetoRepository::class)]
 class Projeto
 {
@@ -15,7 +21,7 @@ class Projeto
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 100)]
+    #[ORM\Column(type: 'string', length: 100, unique: true)]
     private $nome;
 
     #[ORM\Column(type: 'datetime_immutable')]
@@ -33,11 +39,11 @@ class Projeto
     #[ORM\Column(type: 'string', length: 50)]
     private $slug;
 
-    #[ORM\ManyToOne(targetEntity: funcionario::class, inversedBy: 'projetos')]
+    #[ORM\ManyToOne(targetEntity: Funcionario::class, inversedBy: 'projetos')]
     #[ORM\JoinColumn(nullable: false)]
     private $coordenador;
 
-    #[ORM\OneToMany(mappedBy: 'projeto', targetEntity: task::class)]
+    #[ORM\OneToMany(mappedBy: 'projeto', targetEntity: Task::class)]
     private $cod_tasks;
 
     public function __construct()
@@ -67,9 +73,9 @@ class Projeto
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    public function setCreatedAt(): self
     {
-        $this->created_at = $created_at;
+        $this->created_at = new DateTimeImmutable();
 
         return $this;
     }
@@ -79,9 +85,9 @@ class Projeto
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    public function setUpdatedAt(): self
     {
-        $this->updated_at = $updated_at;
+        $this->updated_at = new DateTime();
 
         return $this;
     }

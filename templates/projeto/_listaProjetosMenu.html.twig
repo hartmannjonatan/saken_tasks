@@ -1,0 +1,3 @@
+{% for projeto in projetos %}
+    <li><a href="{{ path('projeto', {slug: projeto.slug}) }}">{{ projeto.nome }}</a></li>
+{% endfor %}

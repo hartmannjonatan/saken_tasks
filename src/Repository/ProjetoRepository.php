@@ -19,22 +19,22 @@ class ProjetoRepository extends ServiceEntityRepository
         parent::__construct($registry, Projeto::class);
     }
 
-    // /**
-    //  * @return Projeto[] Returns an array of Projeto objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findAllDesc()
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT *
+            FROM projeto
+            ORDER BY projeto.id DESC
+            LIMIT 5;
+        ';
+
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        return $resultSet->fetchAllAssociative();
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Projeto

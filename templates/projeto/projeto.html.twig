@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Saken Tasks {{ projeto.nome }} {% endblock %}
+
+{% block body %}
+    <div class="col-lg-1 d-md-none d-lg-block"></div>
+    <div class="col-lg-10 col-md-12 py-4 p-2">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title font-purple h1">{{ projeto.nome }}</div>
+                <hr>
+            </div>
+            <div class="card-body">
+                {% for message in app.flashes('success') %}
+                <div class="alert alert-danger alert-dismissible fade show position-relative" role="alert">
+                    <div class="lato font-black h6">{{ message }}</div>
+                    <button type="button" class="close position-absolute" style="top: 8px; right: 5px;" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+                {% for message in app.flashes('error') %}
+                    <div class="alert alert-danger alert-dismissible fade show position-relative" role="alert">
+                        <div class="lato font-black h6">{{ message }}</div>
+                        <button type="button" class="close position-absolute" style="top: 8px; right: 5px;" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+
+{% endblock %}
+
+{% block footer %} 
+    <div class="rodape text-center py-1 lato font-gray">© Saken Tasks 2022</div>
+{% endblock %}

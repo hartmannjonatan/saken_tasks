@@ -3,7 +3,25 @@
 {% block title %}Saken Tasks Home{% endblock %}
 
 {% block body %}
-    <div class="col-md-11"></div>
+    <div class="col-lg-1 d-md-none d-lg-block"></div>
+    <div class="col-lg-10">
+        {% for message in app.flashes('success') %}
+        <div class="alert alert-danger alert-dismissible fade show position-relative" role="alert">
+            <div class="lato font-black h6">{{ message }}</div>
+            <button type="button" class="close position-absolute" style="top: 8px; right: 5px;" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger alert-dismissible fade show position-relative" role="alert">
+                <div class="lato font-black h6">{{ message }}</div>
+                <button type="button" class="close position-absolute" style="top: 8px; right: 5px;" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+    </div>
 
 
 {% endblock %}

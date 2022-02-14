@@ -137,8 +137,12 @@
     <div id="menu">
                 
     <h3 class="link-titulo">Projetos</h3>
-    <ul class="box">					
-        <li><a href="#">Ver todos</a></li>
+    <ul class="box">
+        {{ render(controller(
+            'App\\Controller\\ProjetoController::readListMenu'
+        )) }}					
+        <li><a href="#"><u>Ver todos</u></a></li>
+        <li><a href="{{ path('newProjeto') }}"><b>Criar Novo +</b></a></li>
     </ul>
 
     <h3 class="link-titulo">Profile</h3>
@@ -150,6 +154,7 @@
     <h3 class="link-titulo">Painéis</h3>
     <ul class="box">
         <li><a href="#">Index</a></li>
+        <li><a href="#"><b>Criar Novo +</b></a></li>
         <!-- mais links -->
     </ul>
 

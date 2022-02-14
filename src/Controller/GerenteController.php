@@ -9,20 +9,14 @@ use App\Form\Type\GerenteTypeEdit;
 use App\Form\Type\UserTypeGerente;
 use App\Form\Type\UserTypeEditGerente;
 use App\Form\Type\DeleteConfirmType;
-use App\Form\Type\ConfirmType;
 use App\Repository\GerenteRepository;
 use App\Repository\UserRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 
 class GerenteController extends AbstractController
 {

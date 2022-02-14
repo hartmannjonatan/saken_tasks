@@ -26,7 +26,11 @@
 					<ul class="navbar-nav">
 						<li class="nav-item d-lg-none my-3 lato">
 							<h5 class="font-white">Projetos</h5>
-							<a class="nav-link px-5" href="#">Ver todos</a> 
+							{{ render(controller(
+								'App\\Controller\\ProjetoController::readListNav'
+							)) }}
+							<a class="nav-link px-5" href="#"><u>Ver todos</u></a>
+							<a class="nav-link px-5" href="{{ path('newProjeto') }}"><b>Criar Novo +</b></a>
 						</li>
 						<hr class="font-white">
 						<li class="nav-item d-lg-none my-3 lato">
@@ -37,6 +41,7 @@
 						<li class="nav-item d-lg-none my-3 lato">
 							<h5 class="font-white">Painéis</h5>
 							<a class="nav-link px-5" href="#">Index</a>
+							<a class="nav-link px-5" href="#"><b>Criar Novo +</b></a>
 						</li>
 						<hr class="font-white">
 						{% if is_granted('ROLE_ADMIN') %}
