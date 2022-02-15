@@ -1,0 +1,32 @@
+{{ form_start(form) }}
+    {{ form_row(form.id, {
+        label: false,
+        attr: {
+            id: 'hidden'
+        }
+    })}}
+    {{ form_row(form.nome, {
+        label: 'Nome:',
+        attr: {
+            placeholder: 'Digite aqui o nome do projeto (lembrando que ele deve ser único).'
+        }
+    })}}
+    {{ form_row(form.cliente, {
+        label: 'Nome do Cliente:',
+        attr: {
+            placeholder: 'Digite o nome do cliente (ou empresa).'
+        }
+    })}}
+    {{ form_row(form.descricao, {
+        label: 'Descrição:',
+        attr: {
+            placeholder: 'Descreva aqui brevemente o projeto...',
+            col: '50',
+            row: '6'
+        }
+    })}}
+    {{ form_row(form.coordenador, {
+        label: 'Escolha o funcionário coordenador deste projeto.'
+    })}}
+    {{ form_row(form.save) }}
+{{ form_end(form) }}

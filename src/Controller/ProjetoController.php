@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Projeto;
+use App\Form\Type\ProjetoTypeEdit;
 use App\Form\Type\ProjetoType;
 use App\Form\Type\imgChooseType;
 use App\Repository\ProjetoRepository;
@@ -168,5 +169,82 @@ class ProjetoController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute("projeto", ['slug' => $projeto->getSlug()]);
+    }
+
+    public function configProjetoForm(int $id): Response{
+        
+        $projeto = $this->repository->find($id);
+        $form = $this->createForm(ProjetoTypeEdit::class, $projeto);
+        return $this->render('projeto/_configProjetoForm.html.twig', ["form" => $form->createView()]);
+    }
+
+    /**
+     * @Route("/update", methods="POST")
+     */
+    public function update(Request $request, ManagerRegistry $doctrine)
+    {
+        $entityManager = $doctrine->getManager();
+
+        $form = $this->createForm(ProjetoTypeEdit::class);
+
+        $form->handleRequest($request);
+        $projeto = $this->repository->find($form->get("id")->getData());
+
+        if($form->isValid()){
+            $nome = $form->get('nome')->getData();
+            /** @var string $slug */
+            $slug = str_replace([' ', '/'], ['_', '%'], $nome);
+
+            $projeto->setSlug($slug);
+            $projeto->setUpdatedAt();
+            $projeto->setNome($form->get('nome')->getData());
+            $projeto->setCliente($form->get('cliente')->getData());
+            $projeto->setDescricao($form->get('descricao')->getData());
+            $projeto->setCoordenador($form->get('coordenador')->getData());
+
+            try {
+                $entityManager->persist($projeto);
+                $entityManager->flush();
+                $this->addFlash(
+                    'success',
+                    'O projeto foi alterado com sucesso!'
+                );
+            } catch (\Exception $e) {
+                $this->addFlash(
+                    'error',
+                    'Ocorreu um erro, tente novamente mais tarde!'
+                );
+            }
+        
+        }
+
+        return $this->redirectToRoute("projeto", ['slug' => $slug]);
+    }
+
+    #[Route('/projeto/delete/{id}', name: 'deleteProjeto')]
+    public function delete(int $id, Request $request, ManagerRegistry $doctrine, ProjetoRepository $projetoRepository): Response {
+        $entityManager = $doctrine->getManager();
+        $projeto = $projetoRepository
+            ->find($id);
+
+        if(!$projeto){
+            $this->addFlash(
+                'error',
+                'Esse projeto não existe. :('
+            );
+            
+            return $this->redirectToRoute('home');
+        }
+
+            $this->addFlash(
+                'success',
+                'O projeto "'.$projeto->getNome().'" foi deletado com sucesso!'
+            );
+
+            $entityManager->remove($projeto);
+            $entityManager->flush();
+            
+            
+            return $this->redirectToRoute('home');
     }
 }

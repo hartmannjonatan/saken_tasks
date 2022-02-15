@@ -15,9 +15,11 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="d-flex justify-content-between">
-                            <div><a href="#"><button type="button" class="btn btn-primary">Confirmar alterações</button></a></div>
-                            <div><a href="#"><button type="button" class="btn btn-secondary">Deletar {{ projeto.nome }}</button></a></div>
+                        {{ render(controller(
+                            'App\\Controller\\ProjetoController::configProjetoForm', {id: projeto.id}
+                        )) }}
+                        <div class="d-flex justify-content-end">
+                            <div style="margin-top: -50px;"><a class="itemDelete" href="{{ path("deleteProjeto", {id: projeto.id}) }}"><button type="button" class="btn btn-secondary">Deletar {{ projeto.nome }}</button></a></div>
                         </div>
                         
                     </div>

@@ -8,6 +8,7 @@ window.onload = function(){
         
     if(document.getElementById("formSearch") != null){document.getElementById("formSearch").addEventListener("reset", cancelSearch, false);} //Pesquisa de itens
     if(document.getElementById("hiddenWithId") != null){imgInput();} //Enviando imagem de capa projeto
+    if(document.getElementById("projeto_type_edit_id") != null){document.getElementById("projeto_type_edit_id").type = 'hidden'}
     
 }
 

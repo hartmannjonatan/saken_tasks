@@ -1,17 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% if edit is defined %}Editar Projeto {% else %} Novo Projeto {% endif %}{% endblock %}
+{% block title %}Novo Projeto{% endblock %}
 
 {% block body %}
     <div class="col-lg-2 d-md-none d-lg-block"></div>
     <div class="col-lg-8 col-md-12 py-5">
         <div class="card">
             <div class="card-body">
-                {% if edit is defined %}
-                    <h2 class="lato font-purple mb-2">Editar Projeto</h2>
-                {% else %}
-                    <h2 class="lato font-purple mb-2">Novo Projeto</h2>
-                {% endif %}
+                <h2 class="lato font-purple mb-2">Novo Projeto</h2>
                 
                 {{ form_start(form) }}
                     {{ form_row(form.nome, {
