@@ -1,0 +1,15 @@
+{{ form_start(form) }}
+    {{ form_row(form.img, {
+        label: 'Faça upload de sua imagem aqui:'
+    })}}
+    {{ form_row(form.id, {
+        attr: {
+            id: 'hiddenId'
+        }
+    }) }}
+    {{ form_row(form.save, {
+        attr: {
+            id: 'btnEnviarFormImg'
+        }
+    }) }}
+{{ form_end(form) }}

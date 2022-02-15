@@ -5,12 +5,76 @@
 {% block body %}
     <div class="col-lg-1 d-md-none d-lg-block"></div>
     <div class="col-lg-10 col-md-12 py-4 p-2">
+        <div class="modal fade" id="modalConfig" tabindex="-1" role="dialog" aria-labelledby="labelConfigModal" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="labelConfigModal">Configurações</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="d-flex justify-content-between">
+                            <div><a href="#"><button type="button" class="btn btn-primary">Confirmar alterações</button></a></div>
+                            <div><a href="#"><button type="button" class="btn btn-secondary">Deletar {{ projeto.nome }}</button></a></div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalChooseImg" tabindex="-1" role="dialog" aria-labelledby="labelChooseModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="labelChooseModal">Alterar capa</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{ render(controller(
+                            'App\\Controller\\ProjetoController::chooseImgCoverForm'
+                        )) }}
+                        <input type="hidden" id="hiddenWithId" value="{{projeto.id}}">
+                        <div class="d-flex justify-content-between">
+                            <div><a href="{{ path("removeImgCover", {id: projeto.id}) }}"><button type="button" class="btn btn-secondary">Remover imagem de capa</button></a></div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="card">
-            <div class="card-header">
-                <div class="card-title font-purple h1">{{ projeto.nome }}</div>
-                <hr>
+            <div class="position-relative"><div id="divChooseImg" data-toggle="modal" data-target="#modalChooseImg" class="text-center font-white lato position-absolute h2">Escolha uma nova imagem de capa</div></button><img id="chooseImg" class="card-img-top" style="object-fit: cover; height: 150px;" src="{{projeto.url_img_cover}}" alt="Imagem de capa"></div>
+            <div class="card-header py-4">
+                <div class="d-flex justify-content-between">
+                    <div class="card-title font-purple h2">{{ projeto.nome }}</div>
+                    <hr>
+                    <div><button data-toggle="modal" data-target="#modalConfig" style="border: 0; background: none;"><img id="configBtn" src="{{asset('img/config.png')}}" width="30" alt="Configurações"></button></div>
+                </div>
+                <div class="my-1">
+                    <details>
+                    <summary class="h6">Detalhes</summary>
+                        <span class="font-10"><b>Cliente: </b></span><span class="font-10">{{ projeto.cliente }}</span><br>
+                        <span class="font-10"><b>Funcionário Coordenador: </b></span><span class="font-10">{{ projeto.funcionario }}</span><br>
+                        <span class="font-10"><b>Criado em: </b></span><span class="font-10">{{ projeto.created_at }}</span><br>
+                        <span class="font-10"><b>Última atualização: </b></span><span class="font-10">{{ projeto.updated_at }}</span><br>
+                    </details>
+                </div>
+                <div class="card mt-3">
+                    <div class="card-body font-black lato h6">
+                        <div class="card-title lato"><b>Descrição do projeto:</b></div><hr>
+                        <p> {{ projeto.descricao }} </p>
+                    </div>
+                </div>
+                
             </div>
             <div class="card-body">
+
                 {% for message in app.flashes('success') %}
                 <div class="alert alert-danger alert-dismissible fade show position-relative" role="alert">
                     <div class="lato font-black h6">{{ message }}</div>
@@ -27,6 +91,8 @@
                         </button>
                     </div>
                 {% endfor %}
+
+                aq vem as tasks
             </div>
         </div>
 

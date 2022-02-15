@@ -195,6 +195,18 @@ label:not(.no-label){
                 transform: rotate(-43deg);
 }
 
+#configBtn{
+    -webkit-transition: -webkit-transform .4s ease-in-out;
+    -ms-transition: -ms-transform .4s ease-in-out;
+    transition: transform .4s ease-in-out; 
+}
+#configBtn:hover{
+    -moz-transform: rotate(-43deg);
+        -webkit-transform: rotate(-43deg);
+            -o-transform: rotate(-43deg);
+                transform: rotate(-43deg);
+}
+
 /* From cssbuttons.io */
 #btncriar {
     width: 150px;
@@ -261,7 +273,27 @@ label:not(.no-label){
    #btncriar:active .iconbtncriar svg {
     transform: scale(0.8);
    }
-/* 
-.card:not(.glass){
-    z-index: 0 !important;
+
+#divChooseImg:hover{
+    background-color: #9933ff8c;
+    padding-top: 5%;
+    cursor: pointer;
+    font-size: calc(1.325rem + .9vw);
+}
+
+#divChooseImg{
+    font-size: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-transition: background-color .4s ease-in-out;
+    -ms-transition: background-color .4s ease-in-out;
+    transition: background-color .4s ease-in-out; 
+}
+
+/* #chooseImg:hover #divChooseImg{
+    visibility: visible;
+}
+
+#divChooseImg:hover{
+    visibility: visible;
 } */

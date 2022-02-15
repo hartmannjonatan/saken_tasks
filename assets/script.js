@@ -7,6 +7,13 @@ window.onload = function(){
     }
         
     if(document.getElementById("formSearch") != null){document.getElementById("formSearch").addEventListener("reset", cancelSearch, false);} //Pesquisa de itens
+    if(document.getElementById("hiddenWithId") != null){imgInput();} //Enviando imagem de capa projeto
+    
+}
+
+function imgInput(){
+    var id = document.getElementById("hiddenWithId").value;
+    document.getElementById("img_choose_id").value = id;
 }
 
 function confirmeLogout(evt) {

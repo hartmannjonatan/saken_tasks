@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ProjetoRepository;
 use DateTime;
+use DateTimeZone;
 use DateTimeImmutable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -46,6 +47,9 @@ class Projeto
     #[ORM\OneToMany(mappedBy: 'projeto', targetEntity: Task::class)]
     private $cod_tasks;
 
+    #[ORM\Column(type: 'string', length: 500)]
+    private $url_imgCover;
+
     public function __construct()
     {
         $this->cod_tasks = new ArrayCollection();
@@ -75,7 +79,8 @@ class Projeto
 
     public function setCreatedAt(): self
     {
-        $this->created_at = new DateTimeImmutable();
+        $date = new DateTimeImmutable('now', new DateTimeZone('America/Sao_Paulo'));
+        $this->created_at = $date;
 
         return $this;
     }
@@ -87,7 +92,8 @@ class Projeto
 
     public function setUpdatedAt(): self
     {
-        $this->updated_at = new DateTime();
+        $date = new DateTime('now', new DateTimeZone('America/Sao_Paulo'));
+        $this->updated_at = $date;
 
         return $this;
     }
@@ -166,6 +172,18 @@ class Projeto
                 $codTask->setProjeto(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUrlImgCover(): ?string
+    {
+        return $this->url_imgCover;
+    }
+
+    public function setUrlImgCover(string $url_imgCover): self
+    {
+        $this->url_imgCover = $url_imgCover;
 
         return $this;
     }
