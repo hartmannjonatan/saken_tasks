@@ -290,10 +290,14 @@ label:not(.no-label){
     transition: background-color .4s ease-in-out; 
 }
 
-/* #chooseImg:hover #divChooseImg{
-    visibility: visible;
+.itemLink div div svg{
+    transition: transform .3s ease-in-out;
 }
 
-#divChooseImg:hover{
-    visibility: visible;
-} */
+.itemLink:hover div div svg{
+    transform: translateX(5px);
+}
+
+.itemLink:hover{
+    transform: scale(1.0002);
+}

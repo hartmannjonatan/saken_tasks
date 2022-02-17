@@ -96,6 +96,16 @@ class ProjetoController extends AbstractController
         ]);
     }
 
+    #[Route('/projetos', name: 'projetos')]
+    public function listProjetos(ProjetoRepository $projetoRepository): Response
+    {
+        $projetos = $projetoRepository->findAllAndJoin();
+
+        return $this->render('projeto/listaProjetos.html.twig', [
+            'projetos' => $projetos,
+        ]);
+    }
+
     public function readListMenu(int $max = 5): Response
     {
         $projetos = $this->repository->findAllDesc();

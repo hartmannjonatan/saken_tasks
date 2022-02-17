@@ -53,6 +53,23 @@ class ProjetoRepository extends ServiceEntityRepository
         return $resultSet->fetchAllAssociative();
     }
 
+    public function findAllAndJoin()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT projeto.id, projeto.nome, projeto.cliente, projeto.created_at, projeto.updated_at, projeto.descricao, projeto.slug, projeto.url_img_cover, funcionario.nome as funcionario
+            FROM projeto
+            INNER JOIN funcionario ON projeto.coordenador_id = funcionario.id
+            ORDER BY projeto.id DESC;
+        ';
+
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        return $resultSet->fetchAllAssociative();
+    }
+
     /*
     public function findOneBySomeField($value): ?Projeto
     {
