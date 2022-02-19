@@ -59,7 +59,7 @@ class ProjetoController extends AbstractController
                     'Ocorreu um erro, tente novamente mais tarde!'
                 );
                 
-                return $this->redirectToRoute('home');
+                return $this->redirectToRoute('projetos');
             }
             
 
@@ -88,7 +88,7 @@ class ProjetoController extends AbstractController
                 'Esse projeto não existe!'
             );
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('projetos');
         }
 
         return $this->render('projeto/projeto.html.twig', [
@@ -243,7 +243,7 @@ class ProjetoController extends AbstractController
                 'Esse projeto não existe. :('
             );
             
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('projetos');
         }
 
             $this->addFlash(
@@ -254,7 +254,6 @@ class ProjetoController extends AbstractController
             $entityManager->remove($projeto);
             $entityManager->flush();
             
-            
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('projetos');
     }
 }

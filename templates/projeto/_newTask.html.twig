@@ -1,0 +1,45 @@
+{{ form_start(form) }}
+    {{ form_row(form.nome, {
+        label: 'Nome da Tarefa:'
+    })}}
+    {{ form_row(form.descricao, {
+        label: 'Descrição:',
+        attr: {
+            placeholder: 'Descreva aqui brevemente essa tarefa...',
+            col: '50',
+            row: '3'
+        }
+    })}}
+    {{ form_row(form.final_date, {
+        label: 'Data final:'
+    })}}
+    {{ form_row(form.cod_func, {
+        label: 'Selecione um funcionário responsável:'
+    })}}
+    {{ form_row(form.tipo, {
+        label: 'Selecione um tipo para esta tarefa:'
+    })}}
+    <div id="classificacaoInput">
+        {{ form_row(form.class, {
+            label: 'Selecione uma classificação para esta tarefa:'
+        })}}
+    </div>
+    <button type="button" class="newTask" id="btnNewClass" style="border: 0; background: none; margin-bottom: 5%;">
+        <?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10px" height="10px" viewBox="0 0 24 24" version="1.1"><g id="surface1"><path style=" stroke:none;fill-rule:nonzero;fill:gray;fill-opacity:1;" d="M 11.582031 0.0507812 C 10.757812 0.210938 10.054688 0.957031 9.9375 1.789062 C 9.914062 1.953125 9.890625 3.84375 9.890625 5.984375 L 9.890625 9.890625 L 5.992188 9.890625 C 3.523438 9.890625 1.972656 9.910156 1.78125 9.941406 C 0.882812 10.082031 0.1875 10.78125 0.0390625 11.691406 C -0.144531 12.796875 0.671875 13.902344 1.789062 14.0625 C 1.953125 14.085938 3.84375 14.109375 5.992188 14.109375 L 9.890625 14.109375 L 9.890625 18.007812 C 9.890625 20.15625 9.914062 22.046875 9.9375 22.210938 C 10.097656 23.328125 11.203125 24.144531 12.308594 23.960938 C 13.21875 23.8125 13.917969 23.117188 14.058594 22.21875 C 14.089844 22.027344 14.109375 20.476562 14.109375 18.007812 L 14.109375 14.109375 L 18.015625 14.109375 C 20.15625 14.109375 22.046875 14.085938 22.210938 14.0625 C 23.328125 13.902344 24.144531 12.796875 23.960938 11.691406 C 23.8125 10.78125 23.117188 10.082031 22.21875 9.941406 C 22.027344 9.910156 20.476562 9.890625 18.015625 9.890625 L 14.109375 9.890625 L 14.109375 5.984375 C 14.109375 3.84375 14.085938 1.953125 14.0625 1.789062 C 13.898438 0.625 12.75 -0.179688 11.582031 0.0507812 Z M 11.582031 0.0507812 "/></g></svg>
+        <span class="h6 align-self-center text-muted">Crie uma nova classificação</span>
+    </button>
+    <div id="newClassInput">
+        {{ form_row(form.nomeClass, {
+            label: 'Nome da classificação:',
+            attr: {
+                placeholder: "Digite aqui o nome da classificação a ser criada para esta task."
+            }
+        })}}
+    </div>
+    {{ form_row(form.idProjeto, {
+        attr: {
+            id: 'hiddenId'
+        }
+    }) }}
+    {{ form_row(form.save) }}
+{{ form_end(form) }}

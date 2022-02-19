@@ -25,7 +25,7 @@ body {
 }
 
 .font-gray{
-    color: rgba(255,255,255,.6);
+    color: #ffffff99 !important;
 }
 
 .font-topic{
@@ -300,4 +300,8 @@ label:not(.no-label){
 
 .itemLink:hover{
     transform: scale(1.0002);
+}
+
+.newTask:hover{
+    transform: scale(1.002);
 }

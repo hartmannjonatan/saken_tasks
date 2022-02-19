@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\TaskRepository;
+use DateTime;
+use DateTimeZone;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
@@ -66,9 +69,10 @@ class Task
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    public function setCreatedAt(): self
     {
-        $this->created_at = $created_at;
+        $date = new DateTimeImmutable('now', new DateTimeZone('America/Sao_Paulo'));
+        $this->created_at = $date;
 
         return $this;
     }
@@ -78,9 +82,12 @@ class Task
         return $this->conclued_at;
     }
 
-    public function setConcluedAt(\DateTimeImmutable $conclued_at): self
+    public function setConcluedAt(\DateTimeImmutable $conclued_at = null): self
     {
-        $this->conclued_at = $conclued_at;
+        $date = new DateTime('now', new DateTimeZone('America/Sao_Paulo'));
+        if($conclued_at == null){
+            $this->conclued_at = null;
+        } else $this->conclued_at = $date;
 
         return $this;
     }
