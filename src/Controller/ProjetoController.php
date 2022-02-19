@@ -7,6 +7,7 @@ use App\Form\Type\ProjetoTypeEdit;
 use App\Form\Type\ProjetoType;
 use App\Form\Type\imgChooseType;
 use App\Repository\ProjetoRepository;
+use App\Repository\TaskRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -77,10 +78,12 @@ class ProjetoController extends AbstractController
     }
 
     #[Route('projeto/{slug}', name: 'projeto')]
-    public function read(ProjetoRepository $projetoRepository, string $slug): Response
+    public function read(ProjetoRepository $projetoRepository, string $slug, TaskRepository $taskRepository): Response
     {
         $projeto = $projetoRepository->findSlugAndJoin($slug);
         $projeto = $projeto[0];
+
+        $tasks = $taskRepository->findAllByProjeto($projeto["id"]);
 
         if(empty($projeto)){
             $this->addFlash(
@@ -93,6 +96,7 @@ class ProjetoController extends AbstractController
 
         return $this->render('projeto/projeto.html.twig', [
             'projeto' => $projeto,
+            'tasks' => $tasks,
         ]);
     }
 

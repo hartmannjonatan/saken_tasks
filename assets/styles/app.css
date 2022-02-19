@@ -305,3 +305,54 @@ label:not(.no-label){
 .newTask:hover{
     transform: scale(1.002);
 }
+
+.taskItem{
+    position:relative;
+    padding:0.5rem 0.5rem;
+    margin-bottom:1rem;
+    border-radius:.4rem
+}
+
+.taskUrgente{
+    border:1px solid #721c24;
+    color: #721c24;
+    background-color: #f8d7da;
+}
+
+.taskIntermediaria{
+    border:1px solid #0c5460;
+    color: #0c5460;
+    background-color: #d1ecf1;
+}
+
+.taskPoucoUrgente{
+    border:1px solid #856404;
+    color: #856404;
+    background-color: #fff3cd;
+}
+
+.taskSemUrgencia{
+    border:1px solid #1b1e21;
+    color: #1b1e21;
+    background-color: #d6d8d9;
+}
+
+.abreModalIcon{
+    -webkit-transition: -webkit-transform .8s ease;
+    -ms-transition: -ms-transform .8s ease;
+    transition: transform .8s ease;
+}
+
+.abreModalIcon:hover{
+    -moz-transform: rotate(180deg);
+        -webkit-transform: rotate(180deg);
+            -o-transform: rotate(180deg);
+                transform: rotate(180deg);
+}
+
+.taskItem:hover div div .abreModalIcon{
+    -moz-transform: rotate(180deg);
+        -webkit-transform: rotate(180deg);
+            -o-transform: rotate(180deg);
+                transform: rotate(180deg);
+}
