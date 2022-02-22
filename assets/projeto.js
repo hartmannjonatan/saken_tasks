@@ -1,20 +1,68 @@
 window.onload = function(){
-    const projetoId = document.getElementById("hiddenWithId").value;
+    var projetoId = document.getElementById("hiddenWithId").value;
     document.getElementById("task_idProjeto").value = projetoId;
-    document.getElementById("newClassInput").style.display = "none";
-    document.getElementById("task_nomeClass").value = "nulo";
-    if(document.getElementById("btnNewClass") !=  null){document.getElementById("btnNewClass").addEventListener("click", showNewClass, false);}
+    document.querySelectorAll('#task_type_edit_idProjet').forEach((el) =>
+        el.value = projetoId
+    );
+    document.querySelectorAll('#newClassInput').forEach((el) =>
+        el.style.display = "none"
+    );
+    document.querySelectorAll('#task_type_edit_nomeClass').forEach((el) =>
+        el.value = "nulo"
+    );
+    document.querySelectorAll('#task_nomeClass').forEach((el) =>
+        el.value = "nulo"
+    );
+    document.querySelectorAll('#btnNewClass').forEach((el) =>
+        el.addEventListener("click", showNewClass, false)
+    );
+    document.querySelectorAll('.btnEditTask').forEach((el) =>
+        el.addEventListener("click", function(){
+            editarTask(el.id)
+        }, false)
+    );
+    document.querySelectorAll('.editDiv').forEach((el) =>
+        el.style.display = "none"
+    );
 }
 
 function showNewClass(){
-    var select = document.getElementById("task_class");
     var opt = document.createElement('option');
     opt.selected = "selected";
     opt.value = "false";
-    select.appendChild(opt);
+    document.querySelectorAll('#task_class').forEach((el) =>
+        el.appendChild(opt)
+    );
+    document.querySelectorAll('#task_type_edit_class').forEach((el) =>
+        el.appendChild(opt)
+    );
 
-    document.getElementById("task_nomeClass").value = "";
-    document.getElementById("classificacaoInput").style.display = "none";
-    document.getElementById("btnNewClass").style.display = "none";
-    document.getElementById("newClassInput").style.display = "block";
+    document.querySelectorAll('#task_nomeClass').forEach((el) =>
+        el.value = ""
+    );
+    document.querySelectorAll('#task_type_edit_nomeClass').forEach((el) =>
+        el.value = ""
+    );
+    document.querySelectorAll('#classificacaoInput').forEach((el) =>
+        el.style.display = "none"
+    );
+    document.querySelectorAll('#btnNewClass').forEach((el) =>
+        el.style.display = "none"
+    );
+    document.querySelectorAll('#newClassInput').forEach((el) =>
+        el.style.display = "block"
+    );
+}
+
+function editarTask(idTask){
+    document.querySelectorAll('.readDiv'+idTask).forEach((el) =>
+        el.style.display = "none"
+    );
+    document.querySelectorAll('.edit'+idTask).forEach((el) =>
+        el.style.display = "block"
+    );
+    var select = '#task'+idTask+' form #task_type_edit_idTask';
+    document.querySelectorAll(select).forEach((el) =>
+        el.value = idTask
+    );
 }

@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Classificacao;
 use App\Entity\Task;
+use App\Form\Type\TaskTypeEdit;
 use App\Form\Type\TaskType;
+use App\Repository\ClassificacaoRepository;
 use App\Repository\ProjetoRepository;
 use App\Repository\TaskRepository;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,6 +18,12 @@ use Symfony\Component\Validator\Constraints\Length;
 
 class TaskController extends AbstractController
 {
+    protected $repository;
+
+    public function __construct(TaskRepository $taskRepository)
+    {
+        $this->repository = $taskRepository;
+    }
 
     /**
      * @Route("/newTask", methods="POST")
@@ -68,6 +76,67 @@ class TaskController extends AbstractController
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
         return $this->render('projeto/_newTask.html.twig', ["form" => $form->createView()]);
+    }
+
+    #[Route('/editTask/{idTask}/{idProjeto}', name: 'editTask')]
+    public function editTask(int $idTask, int $idProjeto, Request $request, ManagerRegistry $doctrine, ClassificacaoRepository $classificacaoRepository, ProjetoRepository $projetoRepository): Response {
+
+        $entityManager = $doctrine->getManager(); 
+        $task = $this->repository->find($idTask);
+
+        $form = $this->createForm(TaskTypeEdit::class, $task);
+
+        $form->handleRequest($request);
+
+        $class = $form->get("class")->getData();
+        $classAntiga = $task->getCodClass();
+        if($classAntiga != $class){
+            $nomeClass = $form->get("nomeClass")->getData();
+            if($nomeClass != "nulo"){
+                $classificacao = new Classificacao();
+                $nomeClass = $form->get("nomeClass")->getData();
+                $classificacao->setNome($nomeClass);
+                $entityManager->persist($classificacao);
+                $task->setCodClass($classificacao);
+                $entityManager->persist($task);
+            } else $task->setCodClass($class);
+
+            $entityManager->persist($task);
+        }
+
+        $entityManager->persist($task);
+
+        $projeto = $projetoRepository->find($idProjeto);
+
+        $task = $form->getData();
+
+        try {
+            $entityManager->persist($task);
+            $entityManager->flush();
+        } catch (\Exception $e) {
+            $this->addFlash(
+                'error',
+                $e->getMessage()
+            );
+        }
+
+        $idClassAntiga = $classAntiga->getId();
+        $tasksClassAntiga = $this->repository->findByClass($idClassAntiga);
+        if(count($tasksClassAntiga) == 0){
+            $classRemove = $classificacaoRepository->find($idClassAntiga);
+            $entityManager->remove($classRemove);
+            $entityManager->flush();
+            $tasksClassAntiga = true;
+        }
+        
+        return $this->redirectToRoute('projeto', ['slug' => $projeto->getSlug()]);
+
+    }
+
+    public function editTaskForm(int $idTask, int $idProjeto): Response{
+        $task = $this->repository->find($idTask);
+        $form = $this->createForm(TaskTypeEdit::class, $task);
+        return $this->render('projeto/_editTask.html.twig', ["form" => $form->createView(), "idTask" => $idTask, "idProjeto" => $idProjeto]);
     }
 
 }

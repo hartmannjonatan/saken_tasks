@@ -31,7 +31,7 @@ class Task
     #[ORM\Column(type: 'string', length: 255)]
     private $descricao;
 
-    #[ORM\ManyToOne(targetEntity: funcionario::class, inversedBy: 'tasks')]
+    #[ORM\ManyToOne(targetEntity: Funcionario::class, inversedBy: 'tasks')]
     #[ORM\JoinColumn(nullable: false)]
     private $cod_func;
 

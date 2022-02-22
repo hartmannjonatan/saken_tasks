@@ -4,7 +4,13 @@
 
 {% block body %}
     <div class="col-lg-1 d-md-none d-lg-block"></div>
+    
+                {% if teste is defined %}
+                    {{teste}}
+                {% endif %}
+                
     <div class="col-lg-10 col-md-12 py-4 p-2">
+        <input type="hidden" id="hiddenWithId" value="{{projeto.id}}">
         <div class="modal fade" id="modalConfig" tabindex="-1" role="dialog" aria-labelledby="labelConfigModal" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
@@ -40,7 +46,6 @@
                         {{ render(controller(
                             'App\\Controller\\ProjetoController::chooseImgCoverForm'
                         )) }}
-                        <input type="hidden" id="hiddenWithId" value="{{projeto.id}}">
                         <div class="d-flex justify-content-between">
                             <div><a href="{{ path("removeImgCover", {id: projeto.id}) }}"><button type="button" class="btn btn-secondary">Remover imagem de capa</button></a></div>
                         </div>
@@ -129,29 +134,47 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h4 class="modal-title font-purple" id="labelTaskDesc">{{task.nome}}</h4>
+                                    <div>
+                                        <button id="{{task.id}}" style="border: 0; background: none;" class="itemDelete btnDeleteTask"><img id="deleteBtn" src="{{asset('img/trash.png')}}" alt="Deletar" width="25"></button>
+                                        <button id="{{task.id}}" style="border: 0; background: none;" class="btnEditTask"><img id="editBtn" src="{{asset('img/edit.png')}}" width="25" alt="Editar"></button>
+                                    </div>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
                                     <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <span class="h5 lato font-purple my-1">Funcionário: </span><span class="h6 lato font-black">{{task.funcionario}}</span><br>
-                                    <div><span class="h5 lato font-purple my-1">Classificação: </span><span class="h6 lato font-black">{{task.classificacao}}</span></div>
-                                    <div class="d-flex justify-content-between my-1">
-                                        <div><span class="h5 lato font-purple">Data de criação: </span><span class="h6 lato font-black">{{task.created_at|date("d/m/Y")}}</span></div>
-                                        <div><span class="h5 lato font-purple">Data final: </span><span class="h6 lato font-black">{{task.final_date|date("d/m/Y")}}</span></div>
-                                    </div>
-                                    <div class="card mt-3">
-                                        <div class="card-body font-black lato h6">
-                                            <div class="card-title lato"><b>Descrição do projeto:</b></div><hr>
-                                            <p> {{ task.descricao }} </p>
+                                    <div class="readDiv{{task.id}}">
+                                        <span class="h5 lato font-purple my-1">Funcionário: </span><span class="h6 lato font-black">{{task.funcionario}}</span><br>
+                                        <div class="d-flex justify-content-between my-1">
+                                            <div><span class="h5 lato font-purple">Classificação: </span><span class="h6 lato font-black">{{task.classificacao}}</span></div>
+                                            <div><span class="h5 lato font-purple">Tipo: </span><span class="h6 lato font-black">{{task.tipo}}</span></div>
+                                        </div>
+                                        
+                                        <div class="d-flex justify-content-between my-1">
+                                            <div><span class="h5 lato font-purple">Data de criação: </span><span class="h6 lato font-black">{{task.created_at|date("d/m/Y")}}</span></div>
+                                            <div><span class="h5 lato font-purple">Data final: </span><span class="h6 lato font-black">{{task.final_date|date("d/m/Y")}}</span></div>
+                                        </div>
+                                        <div class="card mt-3">
+                                            <div class="card-body font-black lato h6">
+                                                <div class="card-title lato"><b>Descrição do projeto:</b></div><hr>
+                                                <p> {{ task.descricao }} </p>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class="editDiv edit{{task.id}}" id="task{{task.id}}">
+                                        {{ render(controller(
+                                            'App\\Controller\\TaskController::editTaskForm',
+                                            { 'idTask': task.id, 'idProjeto': projeto.id }
+                                        )) }}
+                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
                     </div>
 
                 {% endfor %}
+                
             </div>
         </div>
 

@@ -55,4 +55,20 @@ class TaskRepository extends ServiceEntityRepository
 
         return $resultSet->fetchAllAssociative();
     }
+
+    public function findByClass(int $id)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT task.id
+            FROM task
+            WHERE task.cod_class_id = :id;
+        ';
+
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['id' => $id]);
+
+        return $resultSet->fetchAllAssociative();
+    }
 }
