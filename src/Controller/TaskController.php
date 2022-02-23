@@ -126,7 +126,6 @@ class TaskController extends AbstractController
             $classRemove = $classificacaoRepository->find($idClassAntiga);
             $entityManager->remove($classRemove);
             $entityManager->flush();
-            $tasksClassAntiga = true;
         }
         
         return $this->redirectToRoute('projeto', ['slug' => $projeto->getSlug()]);
@@ -137,6 +136,42 @@ class TaskController extends AbstractController
         $task = $this->repository->find($idTask);
         $form = $this->createForm(TaskTypeEdit::class, $task);
         return $this->render('projeto/_editTask.html.twig', ["form" => $form->createView(), "idTask" => $idTask, "idProjeto" => $idProjeto]);
+    }
+
+    #[Route('/deleteTask/{idTask}/{idProjeto}', name: 'deleteTask')]
+    public function delete(int $idTask, int $idProjeto, Request $request, ManagerRegistry $doctrine, ClassificacaoRepository $classificacaoRepository, ProjetoRepository $projetoRepository, TaskRepository $taskRepository): Response {
+        $entityManager = $doctrine->getManager();
+        $task = $taskRepository
+            ->find($idTask);
+        $projeto = $projetoRepository->find($idProjeto);
+
+        if(!$task){
+            $this->addFlash(
+                'error',
+                'Essa task não existe. :('
+            );
+        }
+
+        $this->addFlash(
+            'success',
+            'A task foi deletada com sucesso!'
+        );
+
+        $classAntiga = $task->getCodClass();
+
+        $entityManager->remove($task);
+        $entityManager->flush();
+
+        $idClassAntiga = $classAntiga->getId();
+        $tasksClassAntiga = $this->repository->findByClass($idClassAntiga);
+        if(count($tasksClassAntiga) == 0){
+            $classRemove = $classificacaoRepository->find($idClassAntiga);
+            $entityManager->remove($classRemove);
+            $entityManager->flush();
+        }
+        
+        
+        return $this->redirectToRoute('projeto', ['slug' => $projeto->getSlug()]);
     }
 
 }

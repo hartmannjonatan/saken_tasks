@@ -24,6 +24,18 @@ window.onload = function(){
     document.querySelectorAll('.editDiv').forEach((el) =>
         el.style.display = "none"
     );
+    if(document.querySelectorAll('.itemDelete') != null){
+        document.querySelectorAll('.itemDelete').forEach((el) =>
+            el.addEventListener('click', confirmeDelete, false)
+        );
+    }
+}
+function confirmeDelete(evt) {
+    var res = confirm("Você realmente deseja excluir esse item?");
+
+    if(res != true){
+        evt.preventDefault();
+    }
 }
 
 function showNewClass(){

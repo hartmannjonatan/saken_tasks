@@ -135,7 +135,7 @@
                                 <div class="modal-header">
                                     <h4 class="modal-title font-purple" id="labelTaskDesc">{{task.nome}}</h4>
                                     <div>
-                                        <button id="{{task.id}}" style="border: 0; background: none;" class="itemDelete btnDeleteTask"><img id="deleteBtn" src="{{asset('img/trash.png')}}" alt="Deletar" width="25"></button>
+                                        <a class="itemDelete btnDeleteTask" href="{{path('deleteTask', {idTask: task.id, idProjeto: projeto.id})}}"><img id="deleteBtn" src="{{asset('img/trash.png')}}" alt="Deletar" width="25"></a>
                                         <button id="{{task.id}}" style="border: 0; background: none;" class="btnEditTask"><img id="editBtn" src="{{asset('img/edit.png')}}" width="25" alt="Editar"></button>
                                     </div>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
