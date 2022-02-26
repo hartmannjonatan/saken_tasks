@@ -84,7 +84,7 @@ class Task
 
     public function setConcluedAt(\DateTimeImmutable $conclued_at = null): self
     {
-        $date = new DateTime('now', new DateTimeZone('America/Sao_Paulo'));
+        $date = new DateTimeImmutable('now', new DateTimeZone('America/Sao_Paulo'));
         if($conclued_at == null){
             $this->conclued_at = null;
         } else $this->conclued_at = $date;

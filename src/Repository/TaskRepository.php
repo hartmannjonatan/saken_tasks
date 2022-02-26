@@ -41,7 +41,7 @@ class TaskRepository extends ServiceEntityRepository
         $conn = $this->getEntityManager()->getConnection();
 
         $sql = '
-            SELECT task.id, task.nome, task.descricao, task.final_date, task.created_at, funcionario.nome funcionario, classificacao.nome classificacao, tipo.nome tipo, tipo.grau_urgencia
+            SELECT task.id, task.nome, task.descricao, task.conclued_at, task.final_date, task.created_at, funcionario.nome funcionario, classificacao.nome classificacao, tipo.nome tipo, tipo.grau_urgencia
             FROM task
             INNER JOIN funcionario ON task.cod_func_id = funcionario.id
             INNER JOIN classificacao ON task.cod_class_id = classificacao.id

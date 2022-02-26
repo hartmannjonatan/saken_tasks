@@ -11,10 +11,12 @@ use App\Repository\ProjetoRepository;
 use App\Repository\TaskRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
+use DateTime;
+use DateTimeZone;
+use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Validator\Constraints\Length;
 
 class TaskController extends AbstractController
 {
@@ -121,7 +123,7 @@ class TaskController extends AbstractController
         }
 
         $idClassAntiga = $classAntiga->getId();
-        $tasksClassAntiga = $this->repository->findByClass($idClassAntiga);
+        $tasksClassAntiga = array($this->repository->findByClass($idClassAntiga));
         if(count($tasksClassAntiga) == 0){
             $classRemove = $classificacaoRepository->find($idClassAntiga);
             $entityManager->remove($classRemove);
@@ -163,12 +165,64 @@ class TaskController extends AbstractController
         $entityManager->flush();
 
         $idClassAntiga = $classAntiga->getId();
-        $tasksClassAntiga = $this->repository->findByClass($idClassAntiga);
+        $tasksClassAntiga = array($this->repository->findByClass($idClassAntiga));
         if(count($tasksClassAntiga) == 0){
             $classRemove = $classificacaoRepository->find($idClassAntiga);
             $entityManager->remove($classRemove);
             $entityManager->flush();
         }
+        
+        
+        return $this->redirectToRoute('projeto', ['slug' => $projeto->getSlug()]);
+    }
+
+    #[Route('/checkTask/{idTask}/{idProjeto}', name: 'checkTask')]
+    public function check(int $idTask, int $idProjeto, Request $request, ManagerRegistry $doctrine, ClassificacaoRepository $classificacaoRepository, ProjetoRepository $projetoRepository, TaskRepository $taskRepository): Response {
+        $entityManager = $doctrine->getManager();
+        $task = $taskRepository
+            ->find($idTask);
+        $projeto = $projetoRepository->find($idProjeto);
+
+        if(!$task){
+            $this->addFlash(
+                'error',
+                'Essa task não existe. :('
+            );
+        }
+
+        $this->addFlash(
+            'success',
+            'A task foi concluída com sucesso!'
+        );
+
+        $date = new DateTimeImmutable('now', new DateTimeZone('America/Sao_Paulo'));
+        $task->setConcluedAt($date);
+
+        $entityManager->persist($task);
+        $entityManager->flush();
+        
+        
+        return $this->redirectToRoute('projeto', ['slug' => $projeto->getSlug()]);
+    }
+
+    #[Route('/notCheckedTask/{idTask}/{idProjeto}', name: 'notCheckedTask')]
+    public function notCheck(int $idTask, int $idProjeto, Request $request, ManagerRegistry $doctrine, ClassificacaoRepository $classificacaoRepository, ProjetoRepository $projetoRepository, TaskRepository $taskRepository): Response {
+        $entityManager = $doctrine->getManager();
+        $task = $taskRepository
+            ->find($idTask);
+        $projeto = $projetoRepository->find($idProjeto);
+
+        if(!$task){
+            $this->addFlash(
+                'error',
+                'Essa task não existe. :('
+            );
+        }
+
+        $task->setConcluedAt();
+
+        $entityManager->persist($task);
+        $entityManager->flush();
         
         
         return $this->redirectToRoute('projeto', ['slug' => $projeto->getSlug()]);

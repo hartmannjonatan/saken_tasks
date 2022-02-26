@@ -250,6 +250,15 @@ class ProjetoController extends AbstractController
             return $this->redirectToRoute('projetos');
         }
 
+            $tasks = $projeto->getCodTasks();
+            if(count($tasks) > 0){
+                foreach($tasks as $task){
+                    $entityManager->remove($task);
+                }
+                $entityManager->flush();
+            }
+
+
             $this->addFlash(
                 'success',
                 'O projeto "'.$projeto->getNome().'" foi deletado com sucesso!'

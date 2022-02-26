@@ -110,7 +110,7 @@
                 </div>
 
                 {% for task in tasks %}
-                    <button class="w-100" data-toggle="modal" data-target="#modalTask{{task.id}}" style="border: 0; background: none;">
+                    {% if task.conclued_at == null %}
                         {% if task.grau_urgencia == 1 %}
                             <div class="itemLink item taskItem taskUrgente">
                         {% elseif task.grau_urgencia == 2 %}
@@ -120,60 +120,151 @@
                         {% elseif task.grau_urgencia == 4 %}
                             <div class="itemLink item taskItem taskSemUrgencia">
                         {% endif %}
-                            <div class="d-flex justify-content-start">
-                                <div><img src="{{asset('img/dropdown.png')}}" class="mx-2 abreModalIcon" width="20" alt="Abrir Dropdown"></div>
-                                <div class="h5 inputSearch lato">{{ task.nome }} <span class="mx-3">/</span></div>
-                                <div class="h5 lato">{{task.funcionario}} <span class="mx-3">/</span></div>
-                                <div class="h5 lato">{{task.final_date|date("d/m/Y")}}</div>
-                            </div>
-                        </div>
-                    </button>
-
-                    <div class="modal fade" id="modalTask{{task.id}}" tabindex="-1" role="dialog" aria-labelledby="labelTaskDesc" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title font-purple" id="labelTaskDesc">{{task.nome}}</h4>
-                                    <div>
-                                        <a class="itemDelete btnDeleteTask" href="{{path('deleteTask', {idTask: task.id, idProjeto: projeto.id})}}"><img id="deleteBtn" src="{{asset('img/trash.png')}}" alt="Deletar" width="25"></a>
-                                        <button id="{{task.id}}" style="border: 0; background: none;" class="btnEditTask"><img id="editBtn" src="{{asset('img/edit.png')}}" width="25" alt="Editar"></button>
-                                    </div>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                                    <span aria-hidden="true">&times;</span>
-                                    </button>
+                            <div class="d-flex justify-content-between">
+                            <button class="w-100" data-toggle="modal" data-target="#modalTask{{task.id}}" style="border: 0; background: none;">
+                                <div class="d-flex justify-content-start">
+                                    <div><img src="{{asset('img/dropdown.png')}}" class="mx-2 abreModalIcon" width="20" alt="Abrir Dropdown"></div>
+                                    <div class="h5 inputSearch lato">{{ task.nome }} <span class="mx-3">/</span></div>
+                                    <div class="h5 lato">{{task.funcionario}} <span class="mx-3">/</span></div>
+                                    <div class="h5 lato">{{task.final_date|date("d/m/Y")}}</div>
                                 </div>
-                                <div class="modal-body">
-                                    <div class="readDiv{{task.id}}">
-                                        <span class="h5 lato font-purple my-1">Funcionário: </span><span class="h6 lato font-black">{{task.funcionario}}</span><br>
-                                        <div class="d-flex justify-content-between my-1">
-                                            <div><span class="h5 lato font-purple">Classificação: </span><span class="h6 lato font-black">{{task.classificacao}}</span></div>
-                                            <div><span class="h5 lato font-purple">Tipo: </span><span class="h6 lato font-black">{{task.tipo}}</span></div>
+                            </button>
+                                <div class="cntr">
+                                    <form id="check{{task.id}}" action="{{path("checkTask", {idTask: task.id, idProjeto: projeto.id})}}" method="get">
+                                        <input type="checkbox" id="cbx{{task.id}}" class="hidden-xs-up checkbox">
+                                        <label for="cbx{{task.id}}" class="cbx"></label>
+                                    </form>
+                                </div>
+                            </div>
+                            
+                        </div>
+
+                        <div class="modal fade" id="modalTask{{task.id}}" tabindex="-1" role="dialog" aria-labelledby="labelTaskDesc" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title font-purple" id="labelTaskDesc">{{task.nome}}</h4>
+                                        <div>
+                                            <a class="itemDelete btnDeleteTask" href="{{path('deleteTask', {idTask: task.id, idProjeto: projeto.id})}}"><img id="deleteBtn" src="{{asset('img/trash.png')}}" alt="Deletar" width="25"></a>
+                                            <button id="{{task.id}}" style="border: 0; background: none;" class="btnEditTask"><img id="editBtn" src="{{asset('img/edit.png')}}" width="25" alt="Editar"></button>
                                         </div>
-                                        
-                                        <div class="d-flex justify-content-between my-1">
-                                            <div><span class="h5 lato font-purple">Data de criação: </span><span class="h6 lato font-black">{{task.created_at|date("d/m/Y")}}</span></div>
-                                            <div><span class="h5 lato font-purple">Data final: </span><span class="h6 lato font-black">{{task.final_date|date("d/m/Y")}}</span></div>
-                                        </div>
-                                        <div class="card mt-3">
-                                            <div class="card-body font-black lato h6">
-                                                <div class="card-title lato"><b>Descrição do projeto:</b></div><hr>
-                                                <p> {{ task.descricao }} </p>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="readDiv{{task.id}}">
+                                            <span class="h5 lato font-purple my-1">Funcionário: </span><span class="h6 lato font-black">{{task.funcionario}}</span><br>
+                                            <div class="d-flex justify-content-between my-1">
+                                                <div><span class="h5 lato font-purple">Classificação: </span><span class="h6 lato font-black">{{task.classificacao}}</span></div>
+                                                <div><span class="h5 lato font-purple">Tipo: </span><span class="h6 lato font-black">{{task.tipo}}</span></div>
+                                            </div>
+                                            
+                                            <div class="d-flex justify-content-between my-1">
+                                                <div><span class="h5 lato font-purple">Data de criação: </span><span class="h6 lato font-black">{{task.created_at|date("d/m/Y")}}</span></div>
+                                                <div><span class="h5 lato font-purple">Data final: </span><span class="h6 lato font-black">{{task.final_date|date("d/m/Y")}}</span></div>
+                                            </div>
+                                            <div class="card mt-3">
+                                                <div class="card-body font-black lato h6">
+                                                    <div class="card-title lato"><b>Descrição do projeto:</b></div><hr>
+                                                    <p> {{ task.descricao }} </p>
+                                                </div>
                                             </div>
                                         </div>
+                                        <div class="editDiv edit{{task.id}}" id="task{{task.id}}">
+                                            {{ render(controller(
+                                                'App\\Controller\\TaskController::editTaskForm',
+                                                { 'idTask': task.id, 'idProjeto': projeto.id }
+                                            )) }}
+                                        </div>
+                                        
                                     </div>
-                                    <div class="editDiv edit{{task.id}}" id="task{{task.id}}">
-                                        {{ render(controller(
-                                            'App\\Controller\\TaskController::editTaskForm',
-                                            { 'idTask': task.id, 'idProjeto': projeto.id }
-                                        )) }}
-                                    </div>
-                                    
                                 </div>
                             </div>
                         </div>
-                    </div>
-
+                    {% endif %}
                 {% endfor %}
+
+                <hr>
+                <details>
+                    <summary class="h5 font-black mx-4"><span>Tasks concluídas</span></summary>
+                    {% for task in tasks %}
+                        {% if task.conclued_at != null %}
+                            {% if task.grau_urgencia == 1 %}
+                                <div class="itemLink item taskItem taskUrgente">
+                            {% elseif task.grau_urgencia == 2 %}
+                                <div class="itemLink item taskItem taskPoucoUrgente">
+                            {% elseif task.grau_urgencia == 3 %}
+                                <div class="itemLink item taskItem taskIntermediaria">
+                            {% elseif task.grau_urgencia == 4 %}
+                                <div class="itemLink item taskItem taskSemUrgencia">
+                            {% endif %}
+                                <div class="d-flex justify-content-between">
+                                <button class="w-100" data-toggle="modal" data-target="#modalTask{{task.id}}" style="border: 0; background: none;">
+                                    <div class="d-flex justify-content-start">
+                                        <div><img src="{{asset('img/dropdown.png')}}" class="mx-2 abreModalIcon" width="20" alt="Abrir Dropdown"></div>
+                                        <div class="h5 inputSearch lato">{{ task.nome }} <span class="mx-3">/</span></div>
+                                        <div class="h5 lato">{{task.funcionario}} <span class="mx-3">/</span></div>
+                                        <div class="h5 lato">{{task.final_date|date("d/m/Y")}}</div>
+                                    </div>
+                                </button>
+                                    <div class="cntr">
+                                        <form id="check{{task.id}}" action="{{path("notCheckedTask", {idTask: task.id, idProjeto: projeto.id})}}" method="get">
+                                            <input checked type="checkbox" id="cbx{{task.id}}" class="hidden-xs-up checkbox">
+                                            <label for="cbx{{task.id}}" class="cbx"></label>
+                                        </form>
+                                    </div>
+                                </div>
+                                
+                            </div>
+
+                            <div class="modal fade" id="modalTask{{task.id}}" tabindex="-1" role="dialog" aria-labelledby="labelTaskDesc" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title font-purple" id="labelTaskDesc">{{task.nome}}</h4>
+                                            <div>
+                                                <a class="itemDelete btnDeleteTask" href="{{path('deleteTask', {idTask: task.id, idProjeto: projeto.id})}}"><img id="deleteBtn" src="{{asset('img/trash.png')}}" alt="Deletar" width="25"></a>
+                                                <button id="{{task.id}}" style="border: 0; background: none;" class="btnEditTask"><img id="editBtn" src="{{asset('img/edit.png')}}" width="25" alt="Editar"></button>
+                                            </div>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="readDiv{{task.id}}">
+                                                <span class="h5 lato font-purple my-1">Funcionário: </span><span class="h6 lato font-black">{{task.funcionario}}</span><br>
+                                                <div class="d-flex justify-content-between my-1">
+                                                    <div><span class="h5 lato font-purple">Classificação: </span><span class="h6 lato font-black">{{task.classificacao}}</span></div>
+                                                    <div><span class="h5 lato font-purple">Tipo: </span><span class="h6 lato font-black">{{task.tipo}}</span></div>
+                                                </div>
+                                                
+                                                <div class="d-flex justify-content-between my-1">
+                                                    <div><span class="h5 lato font-purple">Data de criação: </span><span class="h6 lato font-black">{{task.created_at|date("d/m/Y")}}</span></div>
+                                                    <div><span class="h5 lato font-purple">Data final: </span><span class="h6 lato font-black">{{task.final_date|date("d/m/Y")}}</span></div>
+                                                </div>
+                                                <div><span class="h5 lato font-purple">Data de conclusão: </span><span class="h6 lato font-black">{{task.conclued_at|date("d/m/Y")}}</span></div>
+                                                <div class="card mt-3">
+                                                    <div class="card-body font-black lato h6">
+                                                        <div class="card-title lato"><b>Descrição do projeto:</b></div><hr>
+                                                        <p> {{ task.descricao }} </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="editDiv edit{{task.id}}" id="task{{task.id}}">
+                                                {{ render(controller(
+                                                    'App\\Controller\\TaskController::editTaskForm',
+                                                    { 'idTask': task.id, 'idProjeto': projeto.id }
+                                                )) }}
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </details>
                 
             </div>
         </div>

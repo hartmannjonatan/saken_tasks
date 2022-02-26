@@ -1,6 +1,7 @@
 window.onload = function(){
     var projetoId = document.getElementById("hiddenWithId").value;
     document.getElementById("task_idProjeto").value = projetoId;
+    document.getElementById("img_choose_id").value = projetoId;
     document.querySelectorAll('#task_type_edit_idProjet').forEach((el) =>
         el.value = projetoId
     );
@@ -29,7 +30,18 @@ window.onload = function(){
             el.addEventListener('click', confirmeDelete, false)
         );
     }
+
+    document.querySelectorAll(".checkbox").forEach((checkbox) =>
+        checkbox.addEventListener( 'change', function() {
+            setTimeout(() => {  checkTask(this.id); }, 700);
+        })
+    );
 }
+function checkTask(id){
+    var idForm = "check"+id.replace("cbx", "");
+    document.getElementById(idForm).submit();
+}
+
 function confirmeDelete(evt) {
     var res = confirm("Você realmente deseja excluir esse item?");
 
