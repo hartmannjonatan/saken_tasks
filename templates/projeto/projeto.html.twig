@@ -137,7 +137,15 @@
                                         <div><img src="{{asset('img/dropdown.png')}}" class="mx-2 abreModalIcon" width="20" alt="Abrir Dropdown"></div>
                                         <div class="h5 inputSearch lato">{{ task.nome }} <span class="mx-3">/</span></div>
                                         <div class="h5 lato">{{task.funcionario}} <span class="mx-3">/</span></div>
-                                        <div class="h5 lato">{{task.final_date|date("d/m/Y")}}</div>
+                                        <div class="h5 lato">{{task.final_date|date("d/m/Y")}}
+                                            {% if "now"|date > task.final_date|date %}
+                                                {% if "now"|date("d/m/Y") == task.final_date|date("d/m/Y") %}
+                                                    <bold>- HOJE</bold>
+                                                {% else %}
+                                                    <bold>- ATRASADA</bold>
+                                                {% endif %}
+                                            {% endif %}
+                                        </div>
                                     </div>
                                 </button>
                                 <div class="cntr">
