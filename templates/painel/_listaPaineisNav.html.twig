@@ -1,0 +1,3 @@
+{% for painel in paineis %}
+    <a class="nav-link px-5" href="{{ path('readPainel', {id: painel.id}) }}">{{ painel.title }}</a>
+{% endfor %}

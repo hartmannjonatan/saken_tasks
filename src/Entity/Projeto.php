@@ -50,6 +50,9 @@ class Projeto
     #[ORM\Column(type: 'string', length: 500)]
     private $url_imgCover;
 
+    #[ORM\OneToOne(mappedBy: 'cod_projeto', targetEntity: Painel::class, cascade: ['persist', 'remove'])]
+    private $painel;
+
     public function __construct()
     {
         $this->cod_tasks = new ArrayCollection();
@@ -184,6 +187,28 @@ class Projeto
     public function setUrlImgCover(string $url_imgCover): self
     {
         $this->url_imgCover = $url_imgCover;
+
+        return $this;
+    }
+
+    public function getPainel(): ?Painel
+    {
+        return $this->painel;
+    }
+
+    public function setPainel(?Painel $painel): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($painel === null && $this->painel !== null) {
+            $this->painel->setCodProjeto(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($painel !== null && $painel->getCodProjeto() !== $this) {
+            $painel->setCodProjeto($this);
+        }
+
+        $this->painel = $painel;
 
         return $this;
     }

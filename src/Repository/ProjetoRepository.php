@@ -41,8 +41,9 @@ class ProjetoRepository extends ServiceEntityRepository
         $conn = $this->getEntityManager()->getConnection();
 
         $sql = '
-            SELECT projeto.id, projeto.nome, projeto.cliente, projeto.created_at, projeto.updated_at, projeto.descricao, projeto.slug, projeto.url_img_cover, funcionario.nome as funcionario
+            SELECT projeto.id, projeto.nome, projeto.cliente, projeto.created_at, projeto.updated_at, projeto.descricao, projeto.slug, projeto.url_img_cover, funcionario.nome as funcionario, painel.id as painel
             FROM projeto
+            INNER JOIN painel ON projeto.id = painel.cod_projeto_id
             INNER JOIN funcionario ON projeto.coordenador_id = funcionario.id
             WHERE projeto.slug = :slug
         ';

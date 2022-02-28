@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Projeto;
+use App\Entity\Painel;
 use App\Form\Type\ProjetoTypeEdit;
 use App\Form\Type\ProjetoType;
 use App\Form\Type\imgChooseType;
@@ -53,7 +54,6 @@ class ProjetoController extends AbstractController
 
             try {
                 $entityManager->persist($projeto);
-                $entityManager->flush();
             } catch (\Exception $e) {
                 $this->addFlash(
                     'error',
@@ -62,8 +62,13 @@ class ProjetoController extends AbstractController
                 
                 return $this->redirectToRoute('projetos');
             }
-            
 
+            $painel = new Painel();
+            $painel->setTitle($projeto->getNome());
+            $painel->setCodProjeto($projeto);
+            
+            $entityManager->persist($painel);
+            $entityManager->flush();
             $this->addFlash(
                 'success',
                 'O projeto foi cadastrado com sucesso!'

@@ -16,11 +16,4 @@ class HomeController extends AbstractController
         return $this->render('home/index.html.twig');
     }
 
-    #[Route('/painel-index', name: 'painelIndex')]
-    public function painelIndex(): Response
-    {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
-        return $this->render('painel/painel-index.html.twig');
-    }
 }

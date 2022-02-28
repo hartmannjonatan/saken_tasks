@@ -24,6 +24,10 @@ body {
     color: #9933FF !important;
 }
 
+.font-title-painel{
+    color: #2e383c25 !important;
+}
+
 .font-gray{
     color: #ffffff99 !important;
 }
@@ -48,6 +52,15 @@ body {
 
 .rodape{
     background-color: #222222;
+}
+
+.titulo-painel{
+    right: 2%;
+}
+
+.criarNota{
+    right: 2%;
+    bottom: 5%;
 }
 
 .navbar-brand:hover{
@@ -193,6 +206,18 @@ label:not(.no-label){
         -webkit-transform: rotate(-43deg);
             -o-transform: rotate(-43deg);
                 transform: rotate(-43deg);
+}
+
+#painelBtn{
+    -moz-transition: content 0.5s ease;
+        -webkit-transition: content 0.5s ease;
+            -o-transition: content 0.5s ease;
+                transition: content 0.5s ease;
+}
+
+#painelBtn:hover{
+    content: url('/public/img/mural-iconHover.png');
+    width: 30px;
 }
 
 #configBtn{
@@ -441,10 +466,10 @@ label:not(.no-label){
    }
 
    .grid-snap {
-    width: 40%;
+    max-width: 30%;
+    width: min-content;
     border-radius: 4px;
-    padding: 2%;
-    margin: 1rem 0 0 1rem;
+    overflow-wrap: break-word;
     background-color: #29e;
     color: #fff;
     font-size: 1.2em;

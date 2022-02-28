@@ -1,0 +1,3 @@
+{% for painel in paineis %}
+    <li><a href="{{ path('readPainel', {id: painel.id}) }}">{{ painel.title }}</a></li>
+{% endfor %}

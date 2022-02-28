@@ -4,10 +4,6 @@
 
 {% block body %}
     <div class="col-lg-1 d-md-none d-lg-block"></div>
-    
-                {% if teste is defined %}
-                    {{teste}}
-                {% endif %}
                 
     <div class="col-lg-10 col-md-12 py-4 p-2">
         <input type="hidden" id="hiddenWithId" value="{{projeto.id}}">
@@ -61,7 +57,10 @@
                 <div class="d-flex justify-content-between">
                     <div class="card-title font-purple h2">{{ projeto.nome }}</div>
                     <hr>
-                    <div><button data-toggle="modal" data-target="#modalConfig" style="border: 0; background: none;"><img id="configBtn" src="{{asset('img/config.png')}}" width="30" alt="Configurações"></button></div>
+                    <div class="d-flex justify-content-start">
+                        <div class="mx-1"><a href="{{path("readPainel", {id: projeto.painel})}}"><img id="painelBtn" src="{{asset('img/mural-icon.png')}}" width="25" alt="Painel"></a></div>
+                        <div><button data-toggle="modal" data-target="#modalConfig" style="border: 0; background: none;"><img id="configBtn" src="{{asset('img/config.png')}}" width="30" alt="Configurações"></button></div>
+                    </div>
                 </div>
                 <div class="my-1">
                     <details>
