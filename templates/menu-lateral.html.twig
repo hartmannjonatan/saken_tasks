@@ -145,12 +145,6 @@
         <li><a href="{{ path('newProjeto') }}"><b>Criar Novo +</b></a></li>
     </ul>
 
-    <h3 class="link-titulo">Profile</h3>
-    <ul class="box">
-        <li><a href="#">Meu perfil</a></li>
-        <!-- mais links -->
-    </ul>
-
     <h3 class="link-titulo">Painéis</h3>
     <ul class="box">
         {{ render(controller(
@@ -164,6 +158,12 @@
             <li><a href="{{ path('func') }}">Funcionários</a></li>	
             <li><a href="{{ path('cargos') }}">Cargos</a></li>	
             {% if is_granted('ROLE_SUPER_ADMIN') %}<li><a href="{{ path('gerente') }}">Gerentes</a></li>{% endif %}		
+            <!-- mais links -->
+        </ul>
+    {% else %}
+        <h3 class="link-titulo">Profile</h3>
+        <ul class="box">
+            <li><a href="{{ path("userPage") }}">Meu perfil</a></li>
             <!-- mais links -->
         </ul>
     {% endif %}

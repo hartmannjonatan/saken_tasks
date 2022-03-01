@@ -35,6 +35,26 @@ class TaskRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findAllByFunc(int $id)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT task.id, task.nome, task.descricao, task.conclued_at, task.final_date, task.created_at, funcionario.nome funcionario, classificacao.nome classificacao, tipo.nome tipo, tipo.grau_urgencia, projeto.id as projeto, projeto.nome as nome_projeto
+            FROM task
+            INNER JOIN funcionario ON task.cod_func_id = funcionario.id
+            INNER JOIN classificacao ON task.cod_class_id = classificacao.id
+            INNER JOIN tipo ON task.tipo_id = tipo.id
+            INNER JOIN projeto ON task.projeto_id = projeto.id
+            WHERE task.cod_func_id = :id
+            ORDER BY tipo.grau_urgencia ASC;
+        ';
+
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['id' => $id]);
+
+        return $resultSet->fetchAllAssociative();
+    }
 
     public function findAllByProjeto(int $id)
     {

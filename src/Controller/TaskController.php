@@ -176,8 +176,8 @@ class TaskController extends AbstractController
         return $this->redirectToRoute('projeto', ['slug' => $projeto->getSlug()]);
     }
 
-    #[Route('/checkTask/{idTask}/{idProjeto}', name: 'checkTask')]
-    public function check(int $idTask, int $idProjeto, Request $request, ManagerRegistry $doctrine, ClassificacaoRepository $classificacaoRepository, ProjetoRepository $projetoRepository, TaskRepository $taskRepository): Response {
+    #[Route('/checkTask/{idTask}/{idProjeto}/{profile}', name: 'checkTask')]
+    public function check(bool $profile = false, int $idTask, int $idProjeto, Request $request, ManagerRegistry $doctrine, ClassificacaoRepository $classificacaoRepository, ProjetoRepository $projetoRepository, TaskRepository $taskRepository): Response {
         $entityManager = $doctrine->getManager();
         $task = $taskRepository
             ->find($idTask);
@@ -201,8 +201,9 @@ class TaskController extends AbstractController
         $entityManager->persist($task);
         $entityManager->flush();
         
-        
-        return $this->redirectToRoute('projeto', ['slug' => $projeto->getSlug()]);
+        if($profile == false){
+            return $this->redirectToRoute('projeto', ['slug' => $projeto->getSlug()]);
+        } else return $this->redirectToRoute('userPage');
     }
 
     #[Route('/notCheckedTask/{idTask}/{idProjeto}', name: 'notCheckedTask')]

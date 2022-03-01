@@ -137,12 +137,15 @@
                                         <div class="h5 inputSearch lato">{{ task.nome }} <span class="mx-3">/</span></div>
                                         <div class="h5 lato">{{task.funcionario}} <span class="mx-3">/</span></div>
                                         <div class="h5 lato">{{task.final_date|date("d/m/Y")}}
-                                            {% if "now"|date > task.final_date|date %}
-                                                {% if "now"|date("d/m/Y") == task.final_date|date("d/m/Y") %}
-                                                    <bold>- HOJE</bold>
-                                                {% else %}
+                                            {% if "now"|date("d/m/Y") == task.final_date|date("d/m/Y") %}
+                                                <bold>- HOJE</bold>
+                                            {% elseif "now"|date("m") == task.final_date|date("m") %}
+                                                <bold>- NESSE MÊS</bold>
+                                                {% if "now"|date("d") > task.final_date|date("d") %}
                                                     <bold>- ATRASADA</bold>
                                                 {% endif %}
+                                            {% elseif "now"|date("m") > task.final_date|date("m") %}
+                                                <bold>- ATRASADA</bold>
                                             {% endif %}
                                         </div>
                                     </div>
@@ -184,7 +187,7 @@
                                             </div>
                                             <div class="card mt-3">
                                                 <div class="card-body font-black lato h6">
-                                                    <div class="card-title lato"><b>Descrição do projeto:</b></div><hr>
+                                                    <div class="card-title lato"><b>Descrição da tarefa:</b></div><hr>
                                                     <p> {{ task.descricao }} </p>
                                                 </div>
                                             </div>
@@ -264,7 +267,7 @@
                                                 <div><span class="h5 lato font-purple">Data de conclusão: </span><span class="h6 lato font-black">{{task.conclued_at|date("d/m/Y")}}</span></div>
                                                 <div class="card mt-3">
                                                     <div class="card-body font-black lato h6">
-                                                        <div class="card-title lato"><b>Descrição do projeto:</b></div><hr>
+                                                        <div class="card-title lato"><b>Descrição da tarefa:</b></div><hr>
                                                         <p> {{ task.descricao }} </p>
                                                     </div>
                                                 </div>
