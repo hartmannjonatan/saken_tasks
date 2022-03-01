@@ -35,6 +35,23 @@ class PainelRepository extends ServiceEntityRepository
         return $resultSet->fetchAllAssociative();
     }
 
+    public function findIdAndJoin(int $id)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT painel.id, painel.title, note.id as note_id, note.title as note_title, note.conteudo
+            FROM painel
+            INNER JOIN note ON painel.id = note.painel_id
+            WHERE painel.id = :id
+        ';
+
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['id' => $id]);
+
+        return $resultSet->fetchAllAssociative();
+    }
+
     /*
     public function findOneBySomeField($value): ?Painel
     {

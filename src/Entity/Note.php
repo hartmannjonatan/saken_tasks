@@ -9,18 +9,28 @@ use Doctrine\ORM\Mapping as ORM;
 class Note
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'string', length: 20, nullable: true)]
     private $id;
 
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     private $title;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(type: 'string', length: 1000, nullable: true)]
     private $conteudo;
 
     #[ORM\ManyToOne(targetEntity: Painel::class, inversedBy: 'cod_notes')]
     private $painel;
+
+    #[ORM\Column(type: 'string', length: 20)]
+    private $color;
+
+    public function setId(string $idNote, string $idPainel): self
+    {
+        $id = $idNote."p".$idPainel;
+        $this->id = $id;
+
+        return $this;
+    }
 
     public function getId(): ?int
     {
@@ -32,7 +42,7 @@ class Note
         return $this->title;
     }
 
-    public function setTitle(?string $title): self
+    public function setTitle(string $title = "Título"): self
     {
         $this->title = $title;
 
@@ -44,21 +54,9 @@ class Note
         return $this->conteudo;
     }
 
-    public function setConteudo(?string $conteudo): self
+    public function setConteudo(string $conteudo = "Conteúdo..."): self
     {
         $this->conteudo = $conteudo;
-
-        return $this;
-    }
-
-    public function getImgPath(): ?string
-    {
-        return $this->img_path;
-    }
-
-    public function setImgPath(?string $img_path): self
-    {
-        $this->img_path = $img_path;
 
         return $this;
     }
@@ -71,6 +69,18 @@ class Note
     public function setPainel(?Painel $painel): self
     {
         $this->painel = $painel;
+
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(string $color): self
+    {
+        $this->color = $color;
 
         return $this;
     }
