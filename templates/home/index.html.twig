@@ -21,9 +21,240 @@
                 </button>
             </div>
         {% endfor %}
+
+        <div class="row h2 font-purple lato my-5 mx-2 text-center">Bem vindo de volta @{{ app.user.username }}!</div>
+        <div class="row">
+            <div class="col-lg-6">
+                {% if tasks is defined %}
+                    <input type="hidden" id="hiddenWithId" value="{{projetoId}}">
+                    <div class="card">
+                        <div class="card-header py-4">
+                            <div class="card-title font-purple h4">Minhas Tarefas</div>
+                        </div>
+                        <div class="card-body">
+                            {% for message in app.flashes('success') %}
+                            <div class="alert alert-danger alert-dismissible fade show position-relative" role="alert">
+                                <div class="lato font-black h6">{{ message }}</div>
+                                <button type="button" class="close position-absolute" style="top: 8px; right: 5px;" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            {% endfor %}
+                            {% for message in app.flashes('error') %}
+                                <div class="alert alert-danger alert-dismissible fade show position-relative" role="alert">
+                                    <div class="lato font-black h6">{{ message }}</div>
+                                    <button type="button" class="close position-absolute" style="top: 8px; right: 5px;" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                            {% for task in tasks %}
+                                {% if task.conclued_at == null %}
+                                    {% if task.grau_urgencia == 1 %}
+                                        <div class="itemLink item taskItem taskUrgente">
+                                    {% elseif task.grau_urgencia == 2 %}
+                                        <div class="itemLink item taskItem taskPoucoUrgente">
+                                    {% elseif task.grau_urgencia == 3 %}
+                                        <div class="itemLink item taskItem taskIntermediaria">
+                                    {% elseif task.grau_urgencia == 4 %}
+                                        <div class="itemLink item taskItem taskSemUrgencia">
+                                    {% endif %}
+                                        <div class="d-flex justify-content-between">
+                                            <button class="w-100" data-toggle="modal" data-target="#modalTask{{task.id}}" style="border: 0; background: none;">
+                                                <div class="d-flex justify-content-start">
+                                                    <div><img src="{{asset('img/dropdown.png')}}" class="mx-2 abreModalIcon" width="20" alt="Abrir Dropdown"></div>
+                                                    <div class="h5 inputSearch lato">{{ task.nome }} <span class="mx-3">/</span></div>
+                                                    <div class="h5 lato">
+                                                        {% if "now"|date("d/m/Y") == task.final_date|date("d/m/Y") %}
+                                                            <bold>HOJE</bold>
+                                                        {% elseif "now"|date("m") == task.final_date|date("m") %}
+                                                            <bold>NESSE MÊS</bold>
+                                                            {% if "now"|date("d") > task.final_date|date("d") %}
+                                                                <bold>ATRASADA</bold>
+                                                            {% endif %}
+                                                        {% elseif "now"|date("m") > task.final_date|date("m") %}
+                                                            <bold>ATRASADA</bold>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </button>
+                                            <div class="cntr">
+                                                <form id="check{{task.id}}" action="{{path("checkTask", {idTask: task.id, idProjeto: task.projeto, profile: true})}}" method="get">
+                                                    <input type="checkbox" id="cbx{{task.id}}" class="hidden-xs-up checkbox">
+                                                    <label for="cbx{{task.id}}" class="cbx"></label>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+
+                                    <div class="modal fade" id="modalTask{{task.id}}" tabindex="-1" role="dialog" aria-labelledby="labelTaskDesc" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header d-flex justify-content-between">
+                                                    <div><h4 class="modal-title font-purple" id="labelTaskDesc">{{task.nome}}</h4></div>
+                                                    <div class="d-flex jusfity-content-end">
+                                                        <div class="mx-2"><a class="itemDelete btnDeleteTask" href="{{path('deleteTask', {idTask: task.id, idProjeto: task.projeto})}}"><img id="deleteBtn" src="{{asset('img/trash.png')}}" alt="Deletar" width="25"></a></div>
+                                                        <div class="align-self-center">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="readDiv{{task.id}}">
+                                                        <div class="d-flex justify-content-between my-1">
+                                                            <div><span class="h5 lato font-purple">Classificação: </span><span class="h6 lato font-black">{{task.classificacao}}</span></div>
+                                                            <div><span class="h5 lato font-purple">Tipo: </span><span class="h6 lato font-black">{{task.tipo}}</span></div>
+                                                        </div>
+                                                        
+                                                        <div class="d-flex justify-content-between my-1">
+                                                            <div><span class="h5 lato font-purple">Data de criação: </span><span class="h6 lato font-black">{{task.created_at|date("d/m/Y")}}</span></div>
+                                                            <div><span class="h5 lato font-purple">Data final: </span><span class="h6 lato font-black">{{task.final_date|date("d/m/Y")}}</span></div>
+                                                        </div>
+                                                        <div><span class="h5 lato font-purple">Projeto: </span><span class="h6 lato font-black">{{task.nome_projeto}}</span></div>
+                                                        <div class="card mt-3">
+                                                            <div class="card-body font-black lato h6">
+                                                                <div class="card-title lato"><b>Descrição da tarefa:</b></div><hr>
+                                                                <p> {{ task.descricao }} </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                            {% if has == false %}
+                                <div class="h6 text-muted">Você não tem tasks atualmente!</div>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                    
+                {% else %}
+                    <div class="card">
+                        <div class="card-header py-4">
+                            <div class="card-title font-purple h4">Gerenciar</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card my-3">
+                                <div class="card-body itemLink item">
+                                    <a href="{{ path('cargos') }}" style="text-decoration: none;">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="h5 inputSearch lato font-black">Cargos</div>
+                                            <div>
+                                                <svg width="34" height="34" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="37" cy="37" r="35.5" stroke="black" stroke-width="3"></circle>
+                                                    <path d="M25 35.5C24.1716 35.5 23.5 36.1716 23.5 37C23.5 37.8284 24.1716 38.5 25 38.5V35.5ZM49.0607 38.0607C49.6464 37.4749 49.6464 36.5251 49.0607 35.9393L39.5147 26.3934C38.9289 25.8076 37.9792 25.8076 37.3934 26.3934C36.8076 26.9792 36.8076 27.9289 37.3934 28.5147L45.8787 37L37.3934 45.4853C36.8076 46.0711 36.8076 47.0208 37.3934 47.6066C37.9792 48.1924 38.9289 48.1924 39.5147 47.6066L49.0607 38.0607ZM25 38.5L48 38.5V35.5L25 35.5V38.5Z" fill="black"></path>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card my-3">
+                                <div class="card-body itemLink item">
+                                    <a href="{{ path('func') }}" style="text-decoration: none;">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="h5 inputSearch lato font-black">Funcionários</div>
+                                            <div>
+                                                <svg width="34" height="34" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="37" cy="37" r="35.5" stroke="black" stroke-width="3"></circle>
+                                                    <path d="M25 35.5C24.1716 35.5 23.5 36.1716 23.5 37C23.5 37.8284 24.1716 38.5 25 38.5V35.5ZM49.0607 38.0607C49.6464 37.4749 49.6464 36.5251 49.0607 35.9393L39.5147 26.3934C38.9289 25.8076 37.9792 25.8076 37.3934 26.3934C36.8076 26.9792 36.8076 27.9289 37.3934 28.5147L45.8787 37L37.3934 45.4853C36.8076 46.0711 36.8076 47.0208 37.3934 47.6066C37.9792 48.1924 38.9289 48.1924 39.5147 47.6066L49.0607 38.0607ZM25 38.5L48 38.5V35.5L25 35.5V38.5Z" fill="black"></path>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                <div class="card my-3">
+                                    <div class="card-body itemLink item">
+                                        <a href="{{ path('gerente') }}" style="text-decoration: none;">
+                                            <div class="d-flex justify-content-between">
+                                                <div class="h5 inputSearch lato font-black">Gerentes</div>
+                                                <div>
+                                                    <svg width="34" height="34" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <circle cx="37" cy="37" r="35.5" stroke="black" stroke-width="3"></circle>
+                                                        <path d="M25 35.5C24.1716 35.5 23.5 36.1716 23.5 37C23.5 37.8284 24.1716 38.5 25 38.5V35.5ZM49.0607 38.0607C49.6464 37.4749 49.6464 36.5251 49.0607 35.9393L39.5147 26.3934C38.9289 25.8076 37.9792 25.8076 37.3934 26.3934C36.8076 26.9792 36.8076 27.9289 37.3934 28.5147L45.8787 37L37.3934 45.4853C36.8076 46.0711 36.8076 47.0208 37.3934 47.6066C37.9792 48.1924 38.9289 48.1924 39.5147 47.6066L49.0607 38.0607ZM25 38.5L48 38.5V35.5L25 35.5V38.5Z" fill="black"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                {% endif %}
+                
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header font-purple h4">
+                        Recentes
+                    </div>
+                    <div class="card-body">
+                        {% if recents == null %}
+                            <div class="h6 text-muted">Não há projetos ou painéis recentes, acesse-os pelo menu lateral!</div>
+                        {% else %}
+                            <div class="card my-3">
+                                <div class="card-header lato h6 font-black alert alert-danger">
+                                    Projeto
+                                </div>
+                                <div class="card-body itemLink item">
+                                    <a href="{{ path("projeto", {slug: recents.slug}) }}" style="text-decoration: none;">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="h5 inputSearch lato font-black">{{ recents.nome }}</div>
+                                            <div>
+                                                <svg width="34" height="34" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="37" cy="37" r="35.5" stroke="black" stroke-width="3"></circle>
+                                                    <path d="M25 35.5C24.1716 35.5 23.5 36.1716 23.5 37C23.5 37.8284 24.1716 38.5 25 38.5V35.5ZM49.0607 38.0607C49.6464 37.4749 49.6464 36.5251 49.0607 35.9393L39.5147 26.3934C38.9289 25.8076 37.9792 25.8076 37.3934 26.3934C36.8076 26.9792 36.8076 27.9289 37.3934 28.5147L45.8787 37L37.3934 45.4853C36.8076 46.0711 36.8076 47.0208 37.3934 47.6066C37.9792 48.1924 38.9289 48.1924 39.5147 47.6066L49.0607 38.0607ZM25 38.5L48 38.5V35.5L25 35.5V38.5Z" fill="black"></path>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="my-1">
+                                            <span class="text-muted"><b>Última atualização: </b></span><span class="text-muted">{{ recents.updated_at|date("d/m/Y") }}</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card my-3">
+                                <div class="card-header lato h6 font-black alert alert-danger">
+                                    Painel
+                                </div>
+                                <div class="card-body itemLink item">
+                                    <a href="{{  path("readPainel", {id: recents.id_painel}) }}" style="text-decoration: none;">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="h5 inputSearch lato font-black">Painel - {{ recents.title_painel }}</div>
+                                            <div>
+                                                <svg width="34" height="34" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="37" cy="37" r="35.5" stroke="black" stroke-width="3"></circle>
+                                                    <path d="M25 35.5C24.1716 35.5 23.5 36.1716 23.5 37C23.5 37.8284 24.1716 38.5 25 38.5V35.5ZM49.0607 38.0607C49.6464 37.4749 49.6464 36.5251 49.0607 35.9393L39.5147 26.3934C38.9289 25.8076 37.9792 25.8076 37.3934 26.3934C36.8076 26.9792 36.8076 27.9289 37.3934 28.5147L45.8787 37L37.3934 45.4853C36.8076 46.0711 36.8076 47.0208 37.3934 47.6066C37.9792 48.1924 38.9289 48.1924 39.5147 47.6066L49.0607 38.0607ZM25 38.5L48 38.5V35.5L25 35.5V38.5Z" fill="black"></path>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('userPage') }}
 {% endblock %}
 
 {% block footer %} 

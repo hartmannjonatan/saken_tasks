@@ -28,6 +28,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string')]
     private $password;
 
+    #[ORM\ManyToOne(targetEntity: Painel::class)]
+    private $recentPainel;
+
+    #[ORM\ManyToOne(targetEntity: Projeto::class)]
+    private $recentProject;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -117,5 +123,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getRecentPainel(): ?Painel
+    {
+        return $this->recentPainel;
+    }
+
+    public function setRecentPainel(?Painel $recentPainel): self
+    {
+        $this->recentPainel = $recentPainel;
+
+        return $this;
+    }
+
+    public function getRecentProject(): ?Projeto
+    {
+        return $this->recentProject;
+    }
+
+    public function setRecentProject(?Projeto $recentProject): self
+    {
+        $this->recentProject = $recentProject;
+
+        return $this;
     }
 }

@@ -39,6 +39,24 @@ class GerenteRepository extends ServiceEntityRepository
         return $resultSet->fetchAllAssociative();
     }
 
+    public function findIdAndJoin(int $id)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT gerente.id, gerente.nome, user.username
+            FROM gerente
+            INNER JOIN user ON gerente.cod_user_id = user.id
+            WHERE user.id = :id;
+        ';
+
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['id' => $id]);
+
+        return $resultSet->fetchAllAssociative();
+    }
+
+
     /*
     public function findOneBySomeField($value): ?Gerente
     {

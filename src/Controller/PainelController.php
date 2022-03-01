@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Painel;
 use App\Entity\Note;
+use App\Repository\UserRepository;
 use App\Repository\PainelRepository;
 use App\Repository\NoteRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,10 +24,18 @@ class PainelController extends AbstractController
     }
 
     #[Route('/painel/{id}', name: 'readPainel')]
-    public function readPainel(PainelRepository $painelRepository, int $id): Response
+    public function readPainel(Security $security, PainelRepository $painelRepository, int $id, UserRepository $userRepository, ManagerRegistry $doctrine): Response
     {
+        $entityManager = $doctrine->getManager();
+
         $painel = $painelRepository->find($id);
         $notes = $painel->getCodNotes();
+
+        $user = $security->getUser();
+        $user = $userRepository->find($user->id);
+        $user->setRecentPainel($painel);
+        $entityManager->persist($user);
+        $entityManager->flush();
 
         return $this->render('painel/painel.html.twig', [
             'painel' => $painel,

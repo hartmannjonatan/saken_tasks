@@ -36,6 +36,24 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
+    public function findRecents(int $id)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT painel.id id_painel, painel.title title_painel, projeto.slug, projeto.nome, projeto.updated_at
+            FROM user
+            INNER JOIN painel ON user.recent_painel_id = painel.id
+            INNER JOIN projeto ON user.recent_project_id = projeto.id
+            WHERE user.id = :id
+        ';
+
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['id' => $id]);
+
+        return $resultSet->fetchAllAssociative();
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

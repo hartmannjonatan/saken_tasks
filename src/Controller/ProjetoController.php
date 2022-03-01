@@ -7,6 +7,7 @@ use App\Entity\Painel;
 use App\Form\Type\ProjetoTypeEdit;
 use App\Form\Type\ProjetoType;
 use App\Form\Type\imgChooseType;
+use App\Repository\UserRepository;
 use App\Repository\ProjetoRepository;
 use App\Repository\TaskRepository;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,6 +15,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Constraints\Length;
 
 class ProjetoController extends AbstractController
@@ -83,12 +85,20 @@ class ProjetoController extends AbstractController
     }
 
     #[Route('projeto/{slug}', name: 'projeto')]
-    public function read(ProjetoRepository $projetoRepository, string $slug, TaskRepository $taskRepository): Response
+    public function read(UserRepository $userRepository, Security $security, ProjetoRepository $projetoRepository, string $slug, TaskRepository $taskRepository, ManagerRegistry $doctrine): Response
     {
+        $entityManager = $doctrine->getManager();
+
         $projeto = $projetoRepository->findSlugAndJoin($slug);
         $projeto = $projeto[0];
 
         $tasks = $taskRepository->findAllByProjeto($projeto["id"]);
+
+        $user = $security->getUser();
+        $user = $userRepository->find($user->id);
+        $user->setRecentProject($projetoRepository->find($projeto["id"]));
+        $entityManager->persist($user);
+        $entityManager->flush();
 
         if(empty($projeto)){
             $this->addFlash(
